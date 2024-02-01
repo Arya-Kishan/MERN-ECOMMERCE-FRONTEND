@@ -1,0 +1,44 @@
+.slider {
+    animation: slide 20s linear infinite;
+}
+
+@keyframes slide {
+    0% {
+        transform: translateX(100%);
+    }
+
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+table,
+th,
+td {
+    border: 2px solid black;
+    padding: 15px;
+    border-collapse: collapse;
+}
+
+td,
+th {
+    width: 15vw;
+    height: 100px;
+}
+
+@media screen and (max-width:700px) {
+
+    td,
+    th {
+        width: 24vw;
+        height: 20px;
+        padding: 2px;
+    }
+    .tdSmall{
+        display: none;
+    }
+}
