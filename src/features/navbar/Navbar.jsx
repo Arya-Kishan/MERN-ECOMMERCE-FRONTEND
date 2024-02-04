@@ -1,14 +1,17 @@
 import React from 'react'
 import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
-import { Bars3Icon, ShoppingCartIcon, XMarkIcon } from '@heroicons/react/24/outline'
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import CompareArrows from '@mui/icons-material/CompareArrows'
+import ShoppingCart from '@mui/icons-material/ShoppingCart';
+import MenuIcon from '@mui/icons-material/Menu';
+import CloseIcon from '@mui/icons-material/Close';
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { logoutUser, selectLoggedInUser } from '../auth/authSlice'
 import { selectcartCount } from '../cart/cartSlice'
-import dp from '../../assets/profile.png'
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import CompareArrows from '@mui/icons-material/CompareArrows'
+import navbarIcon from '../../assets/profile.png'
+import circle1 from '../../assets/circle1.png'
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -43,9 +46,9 @@ export default function Navbar({ children }) {
                                         <span className="absolute -inset-0.5" />
                                         <span className="sr-only">Open main menu</span>
                                         {open ? (
-                                            <XMarkIcon className="block h-6 w-6" aria-hidden="true" />
+                                            <CloseIcon className="block h-6 w-6" aria-hidden="true" />
                                         ) : (
-                                            <Bars3Icon className="block h-6 w-6" aria-hidden="true" />
+                                            <MenuIcon className="block h-6 w-6" aria-hidden="true" />
                                         )}
                                     </Disclosure.Button>
                                 </div>
@@ -53,20 +56,16 @@ export default function Navbar({ children }) {
                                     <div className="flex flex-shrink-0 items-center gap-2">
                                         <img
                                             className="h-8 w-auto"
-                                            src={dp}
+                                            src={navbarIcon}
                                             alt="Your Company"
                                         />
                                         <span className='text-2xl text-white'>Aryazon</span>
                                     </div>
                                     <div className="hidden sm:ml-6 sm:block">
-                                        <div className="flex space-x-4">
+                                        {user.role == "admin" && <div className="flex space-x-4">
                                             <Link
-                                                to="/admin/productList"
-                                                className='bg-green p-4'
-                                            >
-                                                Admin
-                                            </Link>
-                                        </div>
+                                                to="/admin/productList"><span className='text-xl bg-blue-500 p-2 rounded-md'>Admin</span></Link>
+                                        </div>}
                                     </div>
                                 </div>
                                 <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 gap-3">
@@ -94,7 +93,7 @@ export default function Navbar({ children }) {
                                         <span className="absolute -inset-1.5" />
                                         <span className="sr-only">View notifications</span>
                                         <span className='relative'>
-                                            <ShoppingCartIcon className="h-6 w-6" aria-hidden="true" />
+                                            <ShoppingCart className="h-6 w-6" aria-hidden="true" />
                                             <span className='absolute top-[-10px] right-[-10px]'>{cartCount}</span>
                                         </span>
                                     </button>
@@ -120,7 +119,7 @@ export default function Navbar({ children }) {
                                                 <span className="sr-only">Open user menu</span>
                                                 <img
                                                     className="h-8 w-8 rounded-full"
-                                                    src="circle1.png"
+                                                    src={circle1}
                                                     alt=""
                                                 />
                                             </Menu.Button>
@@ -176,9 +175,11 @@ export default function Navbar({ children }) {
                             <div className="flex flex-col gap-1 
                             space-y-1 px-2 pb-3 pt-2">
                                 {user.role == "admin" && <Link to={'/admin/productList'} className='w-full bg-gray-900 text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-base font-medium'>Admin</Link>}
-                                <Link to={'/wishlist'} className='w-full bg-gray-900 text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-base font-medium'>Wishlist</Link>
-                                <Link to={'/compare'} className='w-full bg-gray-900 text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-base font-medium'>Compare</Link>
-                                <Link to={`/cart/${user._id}`} className='w-full bg-gray-900 text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-base font-medium'>Cart</Link>
+                                {user.role == "user" && (<div>
+                                    <Link to={'/wishlist'} className='w-full bg-gray-900 text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-base font-medium'>Wishlist</Link>
+                                    <Link to={'/compare'} className='w-full bg-gray-900 text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-base font-medium'>Compare</Link>
+                                    <Link to={`/cart/${user._id}`} className='w-full bg-gray-900 text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-base font-medium'>Cart</Link>
+                                </div>)}
                             </div>
                         </Disclosure.Panel>
                     </>

@@ -1,4 +1,5 @@
 // A mock function to mimic making an async request for data
+import { toast } from "react-toastify";
 
 export function fetchTotalCount(total) {
   return new Promise(async (resolve) => {
@@ -31,8 +32,13 @@ export function AddProduct(product) {
       headers: config,
       body: product
     })
-    const data = await response.json()
-    resolve({ data })
+    if (response.ok) {
+      const data = await response.json()
+      toast("PRODUCT ADDED")
+      resolve({ data })
+    } else {
+      resolve({ data: null })
+    }
   });
 }
 
@@ -44,8 +50,14 @@ export function AddCategory(category) {
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify(category)
     })
-    const data = await response.json()
-    resolve({ data })
+    if (response.ok) {
+      const data = await response.json()
+      toast("CATEOGORY ADDED")
+      resolve({ data })
+    } else {
+      toast("ERROR CATEOGORY NOT ADDED")
+      resolve({ data: null })
+    }
   });
 }
 
@@ -54,6 +66,7 @@ export function fetchAllOrders() {
     const response = await fetch(`https://my-mern-ecommerce.vercel.app/order`)
     const data = await response.json()
     resolve({ data })
+
   });
 }
 
@@ -64,8 +77,14 @@ export function updateOrder(order) {
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify({ status: order.status, itemsId: order.items })
     })
-    const data = await response.json()
-    resolve({ data })
+    if (response.ok) {
+      const data = await response.json()
+      toast("ORDER UPDATED")
+      resolve({ data })
+    } else {
+      toast("ERROR ORDER NOT UPDATED")
+      resolve({ data: null })
+    }
   });
 }
 
@@ -76,8 +95,14 @@ export function updateUserRole(user) {
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify({ role: user.role })
     })
-    const data = await response.json()
-    resolve({ data })
+    if (response.ok) {
+      const data = await response.json()
+      toast("ROLE UPDATED")
+      resolve({ data })
+    } else {
+      toast("ERROR ROLE NOT UPDATED")
+      resolve({ data: null })
+    }
   });
 }
 

@@ -40,7 +40,7 @@ export default function AdminProductList() {
       </div>}
 
       {/* BUTTONS TO ADD NEW PRODUCT OR CATEGORY */}
-      <div className='flex justify-evenly'>
+      <div className='flex justify-evenly pt-10 md:pt-20'>
         <button className='bg-green-200 p-3' onClick={e => navigate("/admin/productForm/addNew")}>Add New Product</button>
         <button className='bg-green-200 p-3' onClick={e => navigate("/admin/category")}>Add New Category</button>
       </div>

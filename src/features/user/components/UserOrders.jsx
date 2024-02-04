@@ -14,30 +14,45 @@ export default function UserOrders() {
     dispatch(fetchOrderAsync(user._id))
   }, [])
 
+  const colorChoose = (status) => {
+    switch (status) {
+      case 'pending':
+        return 'bg-purple-200 text-purple-600';
+      case 'dispatched':
+        return 'bg-yellow-200 text-purple-600';
+      case 'delivered':
+        return 'bg-green-200 text-purple-600';
+      case 'cancelled':
+        return 'bg-red-200 text-purple-600';
+      default:
+        return 'bg-purple-200 text-purple-600';
+    }
+  }
+
   return (
     <div className='p-2'>
       {orders.length > 0 && <>
         {orders.map((order) => (
-          <div key={order._id} className='flex flex-col mt-8 bg-slate-100'>
+          <div key={order._id} className='flex flex-col mt-8 bg-slate-200'>
 
             {order.itemId.map((item, i) => (
               <div className='flex flex-col p-2 bg-slate' key={i}>
 
                 <div className='flex'>
                   <div>
-                    <img className='w-40 h-40' src={item.thumbnail} alt="" srcSet="" />
+                    <img className='w-10 h-10 md:w-20 md:h-20' src={item.thumbnail} alt="" srcSet="" />
                   </div>
 
-                  <div className='flex flex-col w-full justify-between p-2'>
+                  <div className='flex flex-col w-full justify-between px-2'>
 
                     <div className='flex justify-between'>
-                      <span className='md:text-3xl'>{item.title}</span>
+                      <span className='md:text-2xl'>{item.title}</span>
                       <span className='md:text-xl'>$ {item.price}</span>
                     </div>
 
                     <div className='flex justify-between'>
-                      <span className='md:text-xl'>{dayjs(order.date).format("DD/MM/YYYY")}</span>
-                      <span className='md:text-xl'>qty : {order.totalQuantity[i].quantity}</span>
+                      <span className='text-[14px] md:text-xl text-gray-400'>{dayjs(order.date).format("DD-MM-YYYY")}</span>
+                      <span className='text-[14px] md:text-xl'>Qty : {order.totalQuantity[i].quantity}</span>
                     </div>
 
                   </div>
@@ -48,9 +63,9 @@ export default function UserOrders() {
 
 
             <div className='flex justify-between p-2'>
-              <p>TotalAmount : $ {order.totalAmount}</p>
-              <p>Method : {order.paymentMethod}</p>
-              <span className='md:text-xl'>status : {order.status}</span>
+              <p>Total : $ {order.totalAmount}</p>
+              <p>{order.paymentMethod}</p>
+              <span className={`md:text-xl ${colorChoose(order.status)} p-1`}>{order.status}</span>
             </div>
 
           </div>

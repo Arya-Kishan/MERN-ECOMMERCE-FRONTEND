@@ -33,7 +33,7 @@ export default function AdminProductForm() {
             delete newData.image4;
             console.log(newData);
 
-            // dispatch(updateProductByIdAsync({ id: productId, products: newData }));
+            dispatch(updateProductByIdAsync({ id: productId, products: newData }));
         } else {
             console.log(data);
             let formData = new FormData();

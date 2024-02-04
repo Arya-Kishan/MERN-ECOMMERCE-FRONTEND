@@ -31,7 +31,7 @@ export default function AdminCategory() {
         <div>
             <div className='p-5'>
                 <h1 className='text-2xl '>Availbale Categories :</h1>
-                <div className='flex flex-col flex-wrap w-full h-[50vh]'>
+                <div className='flex flex-col flex-wrap w-full h-[80vh]'>
                     {
                         categories.map((category, i) => (
                             <div key={i} className='m-3'>

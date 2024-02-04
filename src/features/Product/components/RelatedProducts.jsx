@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchRelatedProductsAsync, selectDetails, selectrelatedProducts } from '../ProductSlice'
-import { StarIcon } from '@heroicons/react/20/solid'
+import StarIcon from '@mui/icons-material/Star';
 import { useNavigate } from 'react-router-dom'
 
 export default function RelatedProducts({ id }) {

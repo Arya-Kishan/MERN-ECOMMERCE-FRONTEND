@@ -10,7 +10,6 @@ export function AddOrder(order) {
     })
     const data = await response.json()
     toast("Order Placed")
-    console.log(data);
     resolve({ data })
   });
 }

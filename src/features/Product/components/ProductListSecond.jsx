@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchAllBrandsAsync, fetchAllCategoriessAsync, fetchAllProductsAsync, fetchFilteredProductsAsync, selectAllBrands, selectAllCategories, selectAllProducts, selectProductsCount } from '../ProductSlice';
-import Rating from '@mui/material/Rating';
+import { fetchAllBrandsAsync, fetchAllCategoriessAsync, fetchAllProductsAsync, fetchFilteredProductsAsync, selectAllBrands, selectAllCategories, selectAllProducts } from '../ProductSlice';
 import ProductCard1 from './ProductCard1';
 import ProductCard2 from './ProductCard2';
 import MenuIcon from '@mui/icons-material/Menu';

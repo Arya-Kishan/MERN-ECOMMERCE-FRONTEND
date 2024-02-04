@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchAllUsersAsync, selectAllUsers, updateUserRoleAsync } from '../adminSlice'
-import { UserIcon } from '@heroicons/react/24/outline'
-import { PencilIcon } from '@heroicons/react/20/solid'
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import EditIcon from '@mui/icons-material/Edit';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import StarBorderPurple500Icon from '@mui/icons-material/StarBorderPurple500';
@@ -41,7 +41,7 @@ export default function AdminUsers() {
             {/* USER INFO */}
             <div className='w-full flex justify-between px-5 py-5'>
 
-              <p className='flex gap-1 items-center'><UserIcon className='w-4 h-4' />{user.name}</p>
+              <p className='flex gap-1 items-center'><AccountCircleIcon className='w-4 h-4' />{user.name}</p>
 
               <p hidden md:flex>{user.email}</p>
 
@@ -58,7 +58,7 @@ export default function AdminUsers() {
               </div>
 
               <div className='flex items-center gap-1'>
-                {(showRole !== user._id) && <div className='flex items-center gap-2'>{user.role}<button onClick={e => setShowRole(user._id)}><PencilIcon className='w-4 h-4' /></button></div>}
+                {(showRole !== user._id) && <div className='flex items-center gap-2'>{user.role}<button onClick={e => setShowRole(user._id)}><EditIcon className='w-4 h-4' /></button></div>}
                 {(showRole == user._id) && <select onChange={e => handleUserRole(e, user._id)}>
                   <option value="choose">CHOOSE ROLE</option>
                   <option value="admin">Admin</option>

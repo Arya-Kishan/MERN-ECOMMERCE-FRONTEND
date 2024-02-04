@@ -35,13 +35,20 @@ export function createUser(newUser) {
 
 export function updateUserAddresses(user) {
   return new Promise(async (resolve) => {
-    const response = await fetch(`/user/${user.id}`, {
+    const response = await fetch(`https://my-mern-ecommerce.vercel.app/user/${user.id}`, {
       method: 'PATCH',
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify({ addresses: user.addresses })
     })
-    const data = await response.json()
-    resolve({ data })
+    if (response.ok) {
+      const data = await response.json()
+      toast("ADDRESS ADDED")
+      resolve({ data })
+    } else {
+      console.log("ADDRESS NOT ADDED");
+      toast("RESET LINK DOESN'T SENT")
+      reject({ data: null })
+    }
   });
 }
 

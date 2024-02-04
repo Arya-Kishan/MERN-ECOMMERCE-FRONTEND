@@ -5,7 +5,7 @@ import { createProductReviewsAsync } from '../ProductSlice'
 import Rating from '@mui/material/Rating';
 import Typography from '@mui/material/Typography';
 import { selectLoggedInUser } from '../../auth/authSlice';
-import { PhotoIcon } from '@heroicons/react/20/solid'
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 export default function ProductReview({ productId, setWriteReview }) {
 
@@ -51,7 +51,7 @@ export default function ProductReview({ productId, setWriteReview }) {
                 </div>
 
                 <div>
-                    <label htmlFor="upload" className='cursor-pointer flex items-center gap-1'> <PhotoIcon className='h-5 w-5' />{file == null ? "Upload Image" : file?.name}</label>
+                    <label htmlFor="upload" className='cursor-pointer flex items-center gap-1'> <AccountCircleIcon className='h-5 w-5' />{file == null ? "Upload Image" : file?.name}</label>
                     <input type="file" id='upload' onChange={e => setFile(e.target.files[0])} className='hidden' />
                 </div>
 
