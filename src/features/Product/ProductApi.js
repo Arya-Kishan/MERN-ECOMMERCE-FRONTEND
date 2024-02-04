@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 // A mock function to mimic making an async request for data
 export function fetchAllProducts(page) {
   return new Promise(async (resolve) => {
-    const response = await fetch(`http://localhost:8080/product?limit=8&page=${page.page}&sort=${page.sort}&order=${page.order}`)
+    const response = await fetch(`/product?limit=8&page=${page.page}&sort=${page.sort}&order=${page.order}`)
     const data = await response.json()
     resolve({ data })
   });
@@ -11,7 +11,7 @@ export function fetchAllProducts(page) {
 
 export function fetchAllCategories() {
   return new Promise(async (resolve) => {
-    const response = await fetch("http://localhost:8080/categories")
+    const response = await fetch("/categories")
     const data = await response.json()
     resolve({ data })
   });
@@ -19,7 +19,7 @@ export function fetchAllCategories() {
 
 export function fetchAllBrands() {
   return new Promise(async (resolve) => {
-    const response = await fetch("http://localhost:8080/brands")
+    const response = await fetch("/brands")
     const data = await response.json()
     resolve({ data })
   });
@@ -34,7 +34,7 @@ export function fetchFilteredProducts(filters) {
       newFilter = `${key}=${filters[key]}`
     }
 
-    const response = await fetch("http://localhost:8080/product?" + newFilter)
+    const response = await fetch("/product?" + newFilter)
     const data = await response.json()
     resolve({ data })
   });
@@ -42,7 +42,7 @@ export function fetchFilteredProducts(filters) {
 
 export function fetchProductDetail(id) {
   return new Promise(async (resolve) => {
-    const response = await fetch(`http://localhost:8080/product/${id}`)
+    const response = await fetch(`/product/${id}`)
     const data = await response.json()
     resolve({ data })
   });
@@ -50,7 +50,7 @@ export function fetchProductDetail(id) {
 
 export function updateProductById(product) {
   return new Promise(async (resolve) => {
-    const response = await fetch(`http://localhost:8080/product/${product.id}`, {
+    const response = await fetch(`/product/${product.id}`, {
       method: 'PATCH',
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify(product.products)
@@ -69,7 +69,7 @@ export function updateProductById(product) {
 
 export function deleteProduct(productId) {
   return new Promise(async (resolve) => {
-    const response = await fetch(`http://localhost:8080/product/${productId}`, {
+    const response = await fetch(`/product/${productId}`, {
       method: 'DELETE',
       headers: { 'content-type': 'application/json' }
     })
@@ -90,7 +90,7 @@ export function createProductReviews(review) {
   }
 
   return new Promise(async (resolve) => {
-    const response = await fetch(`http://localhost:8080/review`, {
+    const response = await fetch(`/review`, {
       method: 'POST',
       headers: config,
       body: review
@@ -103,7 +103,7 @@ export function createProductReviews(review) {
 // FETCHING PRODUCT REVIEWS BY PRODUCT ID FROM REVIEW COLLECTION
 export function fetchProductReviewsById(productId) {
   return new Promise(async (resolve) => {
-    const response = await fetch(`http://localhost:8080/review/${productId}`)
+    const response = await fetch(`/review/${productId}`)
     const data = await response.json()
     resolve({ data })
   });
@@ -112,7 +112,7 @@ export function fetchProductReviewsById(productId) {
 // FETCHING RELATED PRODUCT
 export function fetchRelatedProducts(category) {
   return new Promise(async (resolve) => {
-    const response = await fetch(`http://localhost:8080/product/related/${category}`)
+    const response = await fetch(`/product/related/${category}`)
     const data = await response.json()
     resolve({ data })
   });

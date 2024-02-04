@@ -34,14 +34,14 @@ export default function InfiniteScrollProducts() {
 
     const fetchData1 = async () => {
         a = 0;
-        const { data } = await axios.get(`http://localhost:8080/product?limit=8&page=1`)
+        const { data } = await axios.get(`/product?limit=8&page=1`)
         setProductsMain(data)
     }
 
     const fetchData2 = async () => {
 
         a++;
-        const { data } = await axios.get(`http://localhost:8080/product?limit=8&page=${a}`)
+        const { data } = await axios.get(`/product?limit=8&page=${a}`)
         if (data.length < 8) {
             setStop(false)
         }
