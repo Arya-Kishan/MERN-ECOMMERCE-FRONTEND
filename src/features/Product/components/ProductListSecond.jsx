@@ -149,15 +149,15 @@ export default function ProductListSecond({ show }) {
             <div className='flex justify-center gap-4 flex-wrap w-full h-full p-4'>
                 {layout && <>
                     {data && data.map((e, i) => (
-                        <div>
-                            <ProductCard2 product={e} key={e._id} />
+                        <div key={e._id}>
+                            <ProductCard2 product={e} />
                             {show == "admin" && <div>Edit</div>}
                         </div>
                     ))}
                 </>}
                 {!layout && <>
                     {data && data.map((e, i) => (
-                        <div key={e._id}>
+                        <div C>
                             <ProductCard1 product={e} />
                             {show == "admin" && <div onClick={() => navigate(`/admin/productForm/${e._id}`)} className='w-full bg-green-400 p-5 my-5 hover:bg-green-700 text-center cursor-pointer'>Edit Product</div>}
                         </div>

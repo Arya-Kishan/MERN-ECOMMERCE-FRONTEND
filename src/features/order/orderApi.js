@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 export function AddOrder(order) {
   return new Promise(async (resolve) => {
     console.log(order);
-    const response = await fetch("/order", {
+    const response = await fetch("https://my-mern-ecommerce.vercel.app/order", {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify(order)
@@ -18,7 +18,7 @@ export function AddOrder(order) {
 
 export function fetchOrder(userId) {
   return new Promise(async (resolve) => {
-    const response = await fetch(`/order/${userId}`)
+    const response = await fetch(`https://my-mern-ecommerce.vercel.app/order/${userId}`)
     const data = await response.json()
     resolve({ data })
   });
@@ -27,7 +27,7 @@ export function fetchOrder(userId) {
 // DELETING ALL CART ITEM OF USER
 export function deleteAllUserCartItem(userId) {
   return new Promise(async (resolve) => {
-    const response = await fetch(`/cart/user/${userId}`, {
+    const response = await fetch(`https://my-mern-ecommerce.vercel.app/cart/user/${userId}`, {
       method: 'DELETE',
       headers: { 'content-type': 'application/json' }
     })
@@ -40,7 +40,7 @@ export function deleteAllUserCartItem(userId) {
 export function mailOrderReceipt(order) {
   return new Promise(async (resolve) => {
     console.log(order);
-    const response = await fetch("/order/mailOrder", {
+    const response = await fetch("https://my-mern-ecommerce.vercel.app/order/mailOrder", {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify(order)

@@ -30,7 +30,7 @@ export default function ProductCard1({ product, component, wishlistItemId }) {
   }
 
   return (
-    <div className='boxShadow hover:duration-200 hover:-translate-y-3 '>
+    <div className='boxShadow hover:duration-200 hover:-translate-y-3 cursor-pointer'>
       <div className='flex flex-col items-center border-solid border-2 border-black-900 w-[40vw] h-[200px] md:w-[300px] md:h-[400px] relative' onClick={handleDetail}>
 
         <div className='absolute top-1 right-1 flex flex-col gap-1' onClick={e => e.stopPropagation()}>

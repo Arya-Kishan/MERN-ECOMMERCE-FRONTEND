@@ -1,7 +1,7 @@
 import React from 'react'
 import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
-import { Bars3Icon,ShoppingCartIcon, XMarkIcon } from '@heroicons/react/24/outline'
+import { Bars3Icon, ShoppingCartIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { logoutUser, selectLoggedInUser } from '../auth/authSlice'
@@ -175,7 +175,7 @@ export default function Navbar({ children }) {
                         <Disclosure.Panel className="w-full sm:hidden">
                             <div className="flex flex-col gap-1 
                             space-y-1 px-2 pb-3 pt-2">
-                                <Link to={'/admin/productList'} className='w-full bg-gray-900 text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-base font-medium'>Admin</Link>
+                                {user.role == "admin" && <Link to={'/admin/productList'} className='w-full bg-gray-900 text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-base font-medium'>Admin</Link>}
                                 <Link to={'/wishlist'} className='w-full bg-gray-900 text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-base font-medium'>Wishlist</Link>
                                 <Link to={'/compare'} className='w-full bg-gray-900 text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-base font-medium'>Compare</Link>
                                 <Link to={`/cart/${user._id}`} className='w-full bg-gray-900 text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-base font-medium'>Cart</Link>
