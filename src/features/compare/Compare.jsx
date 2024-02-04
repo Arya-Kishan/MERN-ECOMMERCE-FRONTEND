@@ -7,7 +7,6 @@ export default function Compare() {
 
     const dispatch = useDispatch()
     const compareItems = useSelector(selectCompareItems)
-    const compareCount = useSelector(selectCompareCount)
     const navigate = useNavigate();
 
     const handleDelete = () => {
@@ -22,7 +21,7 @@ export default function Compare() {
 
             {compareItems.length > 0 ? <>
                 <table>
-                    <div className='hidden md:flex'>
+                    <thead className='hidden md:flex'>
                         <tr>
                             <th>Image</th>
                             <th className='tdSmall'>Brand</th>
@@ -30,20 +29,20 @@ export default function Compare() {
                             <th>Rating</th>
                             <th>Price</th>
                         </tr>
-                    </div>
-                    {compareItems.map((e,i) => (
-                        <div onClick={()=>dispatch(deleteComapareItem(i))}>
+                    </thead>
+                    {compareItems.map((e, i) => (
+                        <tbody onClick={() => dispatch(deleteComapareItem(i))} key={i}>
                             <tr>
-                                <td><img className='w-10 h-10' src={e.thumbnail} alt="" srcset="" /></td>
+                                <td><img className='w-10 h-10' src={e.thumbnail} alt="" srcSet="" /></td>
                                 <td className='tdSmall'>{e.brand}</td>
                                 <td>{Math.round(e.discountPercentage * 10) / 10} %</td>
                                 <td>{Math.round(e.rating * 10) / 10}</td>
                                 <td>$ {e.price}</td>
                             </tr>
-                        </div>
+                        </tbody>
                     ))}
                 </table>
-                <div className='fixed bottom-10 right-10'><button onClick={()=>dispatch(clearComapareItem())} className='bg-blue-600 rounded-lg p-4'>Clear</button></div>
+                <div className='fixed bottom-10 right-10'><button onClick={() => dispatch(clearComapareItem())} className='bg-blue-600 rounded-lg p-4'>Clear</button></div>
             </>
                 :
                 <div className='flex flex-col gap-5'>

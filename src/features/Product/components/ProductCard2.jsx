@@ -26,7 +26,7 @@ export default function ProductCard2({ product, component, wishlistItemId }) {
     }
 
     return (
-        <div className='flex gap-1 border-solid border-2 border-black-900 w-[100vw] lg:w-[45vw]' onClick={handleDetail}>
+        <div className='flex gap-1 border-solid border-2 border-black-900 w-[100vw] lg:w-[45vw] hover:duration-200 hover:-translate-y-3 hover:bg-gray-300 mx-2' onClick={handleDetail}>
 
             <img className='w-20 md:w-40 md:p-10' src={product.thumbnail}></img>
 

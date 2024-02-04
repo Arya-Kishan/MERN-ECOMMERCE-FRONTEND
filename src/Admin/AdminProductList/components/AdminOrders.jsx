@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchAllOrdersAsync, fetchSortedOrdersAsync, selectAllOrders, updateOrderAsync } from '../adminSlice'
-import { PencilIcon, UserCircleIcon } from '@heroicons/react/20/solid'
+import { PencilIcon, ShoppingBagIcon, UserCircleIcon } from '@heroicons/react/20/solid'
 import dayjs from 'dayjs'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Fragment } from 'react'
@@ -17,7 +17,6 @@ export default function AdminOrders() {
   const dispatch = useDispatch()
   const orders = useSelector(selectAllOrders)
   const [editOrder, setEditOrder] = useState(-1)
-  console.log(orders);
 
   const handleUpdateOrder = (status, id, order) => {
 
@@ -52,8 +51,9 @@ export default function AdminOrders() {
   return (
     <div className='p-10'>
 
+      {/* ORDERS FILTER WITH DATE */}
       <div className='w-full flex justify-between m-2'>
-        <h1>ORDERS OF CLIENTS :</h1>
+        <h1 className='flex items-center gap-1 text-xl md:text-4xl'> <ShoppingBagIcon className='w-4 h-4' /> ORDERS :</h1>
         <div>
           <Menu as="div" className="relative ml-3">
             <div>
@@ -107,6 +107,7 @@ export default function AdminOrders() {
         </div>
       </div>
 
+      {/* ORDERS */}
       {orders &&
         <>
           <div className='flex flex-col gap-5'>
@@ -114,7 +115,7 @@ export default function AdminOrders() {
               <div className='w-full] flex flex-col p-4 bg-slate-100' key={order.AdminOrders_id}>
 
                 <div className='flex flex-col  gap-5 w-full justify-between items-start lg:flex-row'>
-
+                  {/* ORDER ITEMS */}
                   <div className='flex flex-col'>
                     {order.itemId.map((product, i) => (
                       <div key={product._id} className='mt-2'>
@@ -137,8 +138,8 @@ export default function AdminOrders() {
                     ))}
                   </div>
 
-
-                  <div>
+                  {/* ORDER ADDRESS */}
+                  <div className='hidden md:flex'>
                     <h1 className='text-xl'>Address : </h1>
                     {order.selectedAddresses.map((address, i) => (
                       <div key={i}>
@@ -148,8 +149,8 @@ export default function AdminOrders() {
                       </div>
                     ))}
                   </div>
-
-                  <div>
+                  {/* CLIENT INFO */}
+                  <div className='hidden md:flex'>
                     <h1 className='text-xl flex items-center'><UserCircleIcon className='w-6 h-6 mr-1' />Client : </h1>
                     {order.selectedAddresses.map((address, i) => (
                       <div key={i}>
@@ -160,9 +161,9 @@ export default function AdminOrders() {
                     ))}
                   </div>
 
-
                 </div>
 
+                {/* PAYMENT METHOD DELIVERED DATE */}
                 <div className='flex flex-col w-full justify-between p-2 bg-slate-200 items-center lg:flex-row'>
 
                   <div className='flex justify-between w-full gap-2 m-2'>

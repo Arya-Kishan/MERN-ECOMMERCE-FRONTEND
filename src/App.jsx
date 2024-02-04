@@ -7,6 +7,8 @@ import ProtectedAdminPage from './pages/ProtectedAdminPage';
 import { fetchCartItemsAsync } from './features/cart/cartSlice';
 import { selectLoggedInUser } from './features/auth/authSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import Loader from './pages/Loader';
+import AdminUsers from './Admin/AdminProductList/components/AdminUsers';
 const WishlistPage = lazy(() => (import('./pages/WishlistPage')))
 const ComparePage = lazy(() => (import('./pages/ComparePage')))
 const InfiniteScrollProducts = lazy(() => (import('./features/Product/components/InfiniteScrollProducts')))
@@ -42,7 +44,7 @@ export default function App() {
   return (
     <div>
       <BrowserRouter>
-        <Suspense fallback={<h1>Loading...APP</h1>} >
+        <Suspense fallback={<Loader />} >
           <Routes>
             <Route path='/' element={<ProtectedPage><HomePage></HomePage></ProtectedPage>} />
             <Route path='/signup' element={<SignupPage />} />
@@ -63,6 +65,7 @@ export default function App() {
             <Route path='/admin/orders' element={<ProtectedAdminPage><AdminOrders></AdminOrders></ProtectedAdminPage>} />
             <Route path='/admin/productForm/:productId' element={<ProtectedAdminPage><AdminProductForm></AdminProductForm></ProtectedAdminPage>} />
             <Route path='/admin/category' element={<ProtectedAdminPage><AdminCategory></AdminCategory></ProtectedAdminPage>} />
+            <Route path='/admin/users' element={<ProtectedAdminPage><AdminUsers /></ProtectedAdminPage>} />
             <Route path='*' element={<PageNotFound />} />
           </Routes>
         </Suspense>

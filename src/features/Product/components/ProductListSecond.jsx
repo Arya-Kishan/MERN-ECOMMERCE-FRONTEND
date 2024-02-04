@@ -11,15 +11,17 @@ import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { useNavigate } from 'react-router-dom';
+import { fetchTotalCountAsync, selecttotalEverthingCounts } from '../../../Admin/AdminProductList/adminSlice';
 
-export default function ProductListSecond() {
+export default function ProductListSecond({ show }) {
 
     const [data, setData] = useState(null);
     const [page, setPage] = useState(1);
-    const [paginationCount, setPaginationCount] = useState(12);
+    const [paginationCount, setPaginationCount] = useState(0);
     const dispatch = useDispatch();
     const products = useSelector(selectAllProducts);
-    const productsCount = useSelector(selectProductsCount);
+    // GET THE COUNT OF PRODUCTS ORDERS AND USERS TOTAL
+    const totalProductsCount = useSelector(selecttotalEverthingCounts);
     const categories = useSelector(selectAllCategories);
     const brands = useSelector(selectAllBrands);
     const [layout, setLayout] = useState(false);
@@ -69,12 +71,16 @@ export default function ProductListSecond() {
 
     useEffect(() => {
         setData(products)
+        if (totalProductsCount) {
+            setPaginationCount(Math.ceil(totalProductsCount?.productsCount / 8))
+        }
     }, [products])
 
     useEffect(() => {
         dispatch(fetchAllProductsAsync({ page }));
         dispatch(fetchAllCategoriessAsync());
         dispatch(fetchAllBrandsAsync());
+        dispatch(fetchTotalCountAsync());
     }, [])
 
 
@@ -140,15 +146,21 @@ export default function ProductListSecond() {
             </div>
 
             {/*ADDING VERTICAL AND HORIZINTAL LAYOUT RESPECT TO STATE TRUE AND FALSE */}
-            <div className='flex justify-center gap-2 flex-wrap w-full h-full p-4'>
+            <div className='flex justify-center gap-4 flex-wrap w-full h-full p-4'>
                 {layout && <>
                     {data && data.map((e, i) => (
-                        <ProductCard2 product={e} key={e._id} />
+                        <div>
+                            <ProductCard2 product={e} key={e._id} />
+                            {show == "admin" && <div>Edit</div>}
+                        </div>
                     ))}
                 </>}
                 {!layout && <>
                     {data && data.map((e, i) => (
-                        <ProductCard1 product={e} key={e._id} />
+                        <div key={e._id}>
+                            <ProductCard1 product={e} />
+                            {show == "admin" && <div onClick={() => navigate(`/admin/productForm/${e._id}`)} className='w-full bg-green-400 p-5 my-5 hover:bg-green-700 text-center cursor-pointer'>Edit Product</div>}
+                        </div>
                     ))}
                 </>}
             </div>

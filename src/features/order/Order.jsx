@@ -76,7 +76,7 @@ export default function Order() {
         const stripe = await loadStripe("pk_test_51OTSOaSCLk89VVV2y65ICM1KafKVLbOIhdp06xHCYFST0x3lQGymFiCjyl2Ji6qOcmmugvwPipgsLxtF6bDOhcNM00Msw33mYG")
 
 
-        let res = await fetch("https://my-mern-ecommerce.vercel.app/create-checkout-session", {
+        let res = await fetch("http://localhost:8080/create-checkout-session", {
             method: "POST",
             headers: {
                 "Content-type": "application/json"
@@ -109,7 +109,7 @@ export default function Order() {
 
     return (
         <div>
-            <div className='grid grid-cols-[1.3fr,0.7fr]'>
+            <div className='grid grid-cols-[1fr] md:grid-cols-[1.3fr,0.7fr]'>
                 <form className='p-5' onSubmit={handleSubmit((data, e) => {
                     handleAddAddress(data, e);
                 })}>
@@ -261,8 +261,8 @@ export default function Order() {
                     {/* SELECTING ADDRESS */}
                     <div className="border-b border-gray-900/10 pb-12">
                         <div className='flex justify-between pt-10 pb-4'>
-                            <h2 className="font-semibold leading-7 text-gray-900 text-2xl"> Choose from Exixsting Address</h2>
-                            <div onClick={e => setShowForm(true)} className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Add New Address</div>
+                            <h2 className="font-semibold leading-7 text-gray-900 text-2xl"> Choose Address</h2>
+                            <div onClick={e => setShowForm(true)} className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Add New</div>
                         </div>
                         <ul role="list" >
                             {user.addresses.map((address, i) => (
@@ -330,7 +330,7 @@ export default function Order() {
                 <div>
                     {cart &&
                         <>
-                            <div className="mt-8">
+                            <div className="mt-8 p-2">
                                 <div className="flow-root">
                                     <ul role="list" className="-my-6 divide-y divide-gray-200">
                                         {cart?.map((product) => (

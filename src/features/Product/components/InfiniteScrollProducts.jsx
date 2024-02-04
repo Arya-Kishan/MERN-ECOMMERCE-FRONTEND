@@ -34,14 +34,14 @@ export default function InfiniteScrollProducts() {
 
     const fetchData1 = async () => {
         a = 0;
-        const { data } = await axios.get(`https://my-mern-ecommerce.vercel.app/product?limit=8&page=1`)
+        const { data } = await axios.get(`http://localhost:8080/product?limit=8&page=1`)
         setProductsMain(data)
     }
 
     const fetchData2 = async () => {
 
         a++;
-        const { data } = await axios.get(`https://my-mern-ecommerce.vercel.app/product?limit=8&page=${a}`)
+        const { data } = await axios.get(`http://localhost:8080/product?limit=8&page=${a}`)
         if (data.length < 8) {
             setStop(false)
         }
@@ -159,10 +159,10 @@ export default function InfiniteScrollProducts() {
 
             </div>
 
-            <div className='mt-20'>
+            <div className='mt-10 md:mt-20'>
                 {productsMain &&
                     <InfiniteScroll
-                        className='flex flex-wrap gap-5 px-2 mt-10'
+                        className='flex justify-center items-center flex-wrap gap-5 px-2 py-5'
                         dataLength={productsMain.length} //This is important field to render the next data
                         next={fetchData2}
                         hasMore={stop}
@@ -180,6 +180,7 @@ export default function InfiniteScrollProducts() {
                         ))}
                     </InfiniteScroll>}
             </div>
+
         </div>
     )
 }

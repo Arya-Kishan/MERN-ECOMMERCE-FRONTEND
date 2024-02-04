@@ -30,8 +30,8 @@ export default function ProductCard1({ product, component, wishlistItemId }) {
   }
 
   return (
-    <div>
-      <div className='flex flex-col items-center border-solid border-2 border-black-900 w-[200px] h-[250px] md:w-[300px] md:h-[400px] relative' onClick={handleDetail}>
+    <div className='boxShadow hover:duration-200 hover:-translate-y-3 '>
+      <div className='flex flex-col items-center border-solid border-2 border-black-900 w-[40vw] h-[200px] md:w-[300px] md:h-[400px] relative' onClick={handleDetail}>
 
         <div className='absolute top-1 right-1 flex flex-col gap-1' onClick={e => e.stopPropagation()}>
 
@@ -54,22 +54,23 @@ export default function ProductCard1({ product, component, wishlistItemId }) {
 
         <img className='w-[200px] h-[110px] md:w-[300px] md:h-[170px]' src={product.thumbnail}></img>
 
-        <div className='flex flex-col justify-between h-full p-2'>
+        <div className='w-full flex flex-col justify-between h-full p-2'>
 
-          <div>
-            <p className='text-xl'>{product.title}</p>
+          <div className='text-start'>
+            <p className='text-[14px] md:text-xl'>{product.title.split(" ").slice(0,2).join(" ")}</p>
             <p className='hidden md:flex text-gray-400'>{product.description}</p>
           </div>
 
-          <p className='w-full flex justify-between'>
-            <span>${product.price}</span>
-            <span><Rating
-              name="simple-controlled"
-              value={product.rating}
-            /></span>
+          <p className='w-full flex gap-5 items-center justify-between'>
+            <span className='text-[10px] md:text-xl'>${product.price}</span>
+            <span>
+              <Rating
+                name="simple-controlled"
+                value={product.rating}
+                style={{fontSize:"12px"}}
+              />
+            </span>
           </p>
-
-          {wishlistItemId && <span>{wishlistItemId}</span>}
 
         </div>
 

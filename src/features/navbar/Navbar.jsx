@@ -1,7 +1,7 @@
 import React from 'react'
 import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
-import { Bars3Icon, BellIcon, ShoppingCartIcon, XMarkIcon } from '@heroicons/react/24/outline'
+import { Bars3Icon,ShoppingCartIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { logoutUser, selectLoggedInUser } from '../auth/authSlice'
@@ -9,11 +9,6 @@ import { selectcartCount } from '../cart/cartSlice'
 import dp from '../../assets/profile.png'
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import CompareArrows from '@mui/icons-material/CompareArrows'
-
-const navigation = [
-    { name: 'Admin Product', to: '/admin/productList', current: true },
-    { name: 'Admin Orders', to: '/admin/orders', current: true },
-]
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -65,28 +60,22 @@ export default function Navbar({ children }) {
                                     </div>
                                     <div className="hidden sm:ml-6 sm:block">
                                         <div className="flex space-x-4">
-                                            {user.role == 'admin' && navigation.map((item) => (
-                                                <Link
-                                                    key={item.name}
-                                                    to={item.to}
-                                                    className={classNames(
-                                                        item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                                                        'rounded-md px-3 py-2 text-sm font-medium'
-                                                    )}
-                                                    aria-current={item.current ? 'page' : undefined}
-                                                >
-                                                    {item.name}
-                                                </Link>
-                                            ))}
+                                            <Link
+                                                to="/admin/productList"
+                                                className='bg-green p-4'
+                                            >
+                                                Admin
+                                            </Link>
                                         </div>
                                     </div>
                                 </div>
                                 <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 gap-3">
 
+                                    {/* WISHLIST */}
                                     <button
                                         onClick={(e) => (handleNavigateWishlist())}
                                         type="button"
-                                        className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                                        className="hidden md:flex relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
                                     >
                                         <span className="absolute -inset-1.5" />
                                         <span className="sr-only">View notifications</span>
@@ -96,10 +85,11 @@ export default function Navbar({ children }) {
                                         </span>
                                     </button>
 
+                                    {/* CART BITTON */}
                                     <button
                                         onClick={(e) => (handleNavigate(e, 'userId'))}
                                         type="button"
-                                        className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                                        className="hidden md:flex relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
                                     >
                                         <span className="absolute -inset-1.5" />
                                         <span className="sr-only">View notifications</span>
@@ -109,10 +99,11 @@ export default function Navbar({ children }) {
                                         </span>
                                     </button>
 
+                                    {/* COMPARE BUTTON  */}
                                     <button
                                         onClick={(e) => navigate("/compare")}
                                         type="button"
-                                        className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                                        className="hidden md:flex relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
                                     >
                                         <span className="absolute -inset-1.5" />
                                         <span className="sr-only">View notifications</span>
@@ -129,7 +120,7 @@ export default function Navbar({ children }) {
                                                 <span className="sr-only">Open user menu</span>
                                                 <img
                                                     className="h-8 w-8 rounded-full"
-                                                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                                                    src="circle1.png"
                                                     alt=""
                                                 />
                                             </Menu.Button>
@@ -181,22 +172,13 @@ export default function Navbar({ children }) {
                             </div>
                         </div>
 
-                        <Disclosure.Panel className="sm:hidden">
-                            <div className="space-y-1 px-2 pb-3 pt-2">
-                                {user.role == 'admin' && navigation.map((item) => (
-                                    <Disclosure.Button
-                                        key={item.name}
-                                        as="a"
-                                        to={item.to}
-                                        className={classNames(
-                                            item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                                            'block rounded-md px-3 py-2 text-base font-medium'
-                                        )}
-                                        aria-current={item.current ? 'page' : undefined}
-                                    >
-                                        {item.name}
-                                    </Disclosure.Button>
-                                ))}
+                        <Disclosure.Panel className="w-full sm:hidden">
+                            <div className="flex flex-col gap-1 
+                            space-y-1 px-2 pb-3 pt-2">
+                                <Link to={'/admin/productList'} className='w-full bg-gray-900 text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-base font-medium'>Admin</Link>
+                                <Link to={'/wishlist'} className='w-full bg-gray-900 text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-base font-medium'>Wishlist</Link>
+                                <Link to={'/compare'} className='w-full bg-gray-900 text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-base font-medium'>Compare</Link>
+                                <Link to={`/cart/${user._id}`} className='w-full bg-gray-900 text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-base font-medium'>Cart</Link>
                             </div>
                         </Disclosure.Panel>
                     </>
@@ -206,6 +188,6 @@ export default function Navbar({ children }) {
                 <div className="mx-auto w-full py-6 sm:px-2 lg:px-2 pt-[64px]">{children}</div>
             </main>
 
-        </div>
+        </div >
     )
 }

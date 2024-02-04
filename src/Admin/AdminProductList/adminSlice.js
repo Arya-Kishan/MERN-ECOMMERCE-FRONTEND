@@ -1,15 +1,32 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { AddCategory, AddProduct, fetchAllOrders, fetchSortedOrders, updateOrder } from './adminProductApi';
+import { AddCategory, AddProduct, fetchAllOrders, fetchAllUsers, fetchSortedOrders, fetchTotalCount, updateOrder, updateUserRole } from './adminProductApi';
 
 const initialState = {
   value: 0,
+  totalEverthingCounts: null,
   orders: null,
   status: 'idle',
+  getAllUsers: null,
 };
 
 
 
 
+export const fetchTotalCountAsync = createAsyncThunk(
+  'admin/fetchTotalCount',
+  async (total) => {
+    const response = await fetchTotalCount(total);
+    return response.data;
+  }
+);
+
+export const fetchAllUsersAsync = createAsyncThunk(
+  'admin/fetchAllUsers',
+  async () => {
+    const response = await fetchAllUsers();
+    return response.data;
+  }
+);
 
 
 
@@ -46,6 +63,14 @@ export const updateOrderAsync = createAsyncThunk(
   }
 );
 
+export const updateUserRoleAsync = createAsyncThunk(
+  'admin/updateUserRole',
+  async (user) => {
+    const response = await updateUserRole(user);
+    return response.data;
+  }
+);
+
 export const fetchSortedOrdersAsync = createAsyncThunk(
   'admin/fetchSortedOrders',
   async (order) => {
@@ -72,6 +97,20 @@ export const adminSlice = createSlice({
 
   extraReducers: (builder) => {
     builder
+      .addCase(fetchTotalCountAsync.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(fetchTotalCountAsync.fulfilled, (state, action) => {
+        state.status = 'idle';
+        state.totalEverthingCounts = action.payload;
+      })
+      .addCase(fetchAllUsersAsync.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(fetchAllUsersAsync.fulfilled, (state, action) => {
+        state.status = 'idle';
+        state.getAllUsers = action.payload;
+      })
       .addCase(AddProductAsync.pending, (state) => {
         state.status = 'loading';
       })
@@ -108,11 +147,21 @@ export const adminSlice = createSlice({
         let index = state.orders.findIndex((e) => e._id === action.payload._id);
         state.orders.splice(index, 1, action.payload);
       })
+      .addCase(updateUserRoleAsync.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(updateUserRoleAsync.fulfilled, (state, action) => {
+        state.status = 'idle';
+        let index = state.getAllUsers.findIndex((e) => e._id === action.payload._id);
+        state.getAllUsers.splice(index, 1, action.payload);
+      })
   },
 });
 
 export const { increment } = adminSlice.actions;
 
 export const selectAllOrders = (state) => state.admin.orders;
+export const selectAllUsers = (state) => state.admin.getAllUsers;
+export const selecttotalEverthingCounts = (state) => state.admin.totalEverthingCounts;
 
 export default adminSlice.reducer;

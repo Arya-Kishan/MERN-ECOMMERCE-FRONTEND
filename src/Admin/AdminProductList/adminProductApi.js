@@ -1,10 +1,35 @@
 // A mock function to mimic making an async request for data
-export function AddProduct(product) {
+
+export function fetchTotalCount(total) {
   return new Promise(async (resolve) => {
-    const response = await fetch("https://my-mern-ecommerce.vercel.app/product", {
+    const response = await fetch(`http://localhost:8080/count`)
+    const data = await response.json()
+    resolve({ data })
+  });
+}
+
+// FETCHING ALL USERS
+export function fetchAllUsers() {
+  return new Promise(async (resolve) => {
+    const response = await fetch(`http://localhost:8080/user`)
+    const data = await response.json()
+    resolve({ data })
+  });
+}
+
+export function AddProduct(product) {
+
+  const config = {
+    headers: {
+      "Content-Type": "multipart/form-data"
+    }
+  }
+
+  return new Promise(async (resolve) => {
+    const response = await fetch("http://localhost:8080/product", {
       method: 'POST',
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify(product)
+      headers: config,
+      body: product
     })
     const data = await response.json()
     resolve({ data })
@@ -14,7 +39,7 @@ export function AddProduct(product) {
 
 export function AddCategory(category) {
   return new Promise(async (resolve) => {
-    const response = await fetch("https://my-mern-ecommerce.vercel.app/categories", {
+    const response = await fetch("http://localhost:8080/categories", {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify(category)
@@ -26,7 +51,7 @@ export function AddCategory(category) {
 
 export function fetchAllOrders() {
   return new Promise(async (resolve) => {
-    const response = await fetch(`https://my-mern-ecommerce.vercel.app/order`)
+    const response = await fetch(`http://localhost:8080/order`)
     const data = await response.json()
     resolve({ data })
   });
@@ -34,7 +59,7 @@ export function fetchAllOrders() {
 
 export function updateOrder(order) {
   return new Promise(async (resolve) => {
-    const response = await fetch(`https://my-mern-ecommerce.vercel.app/order/${order.id}`, {
+    const response = await fetch(`http://localhost:8080/order/${order.id}`, {
       method: 'PATCH',
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify({ status: order.status, itemsId: order.items })
@@ -44,9 +69,21 @@ export function updateOrder(order) {
   });
 }
 
+export function updateUserRole(user) {
+  return new Promise(async (resolve) => {
+    const response = await fetch(`http://localhost:8080/user/${user.id}`, {
+      method: 'PATCH',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ role: user.role })
+    })
+    const data = await response.json()
+    resolve({ data })
+  });
+}
+
 export function fetchSortedOrders(order) {
   return new Promise(async (resolve) => {
-    const response = await fetch(`https://my-mern-ecommerce.vercel.app/order?sort=${order}`)
+    const response = await fetch(`http://localhost:8080/order?sort=${order}`)
     const data = await response.json()
     resolve({ data })
   });

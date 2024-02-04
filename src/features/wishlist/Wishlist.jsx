@@ -20,7 +20,7 @@ export default function Wishlist() {
   return (
     <div className='mt-4'>
       <h1 className='text-4xl text-center'>WISHLIST</h1>
-      <div className='flex gap-10 flex-wrap'>
+      <div className='flex gap-8 items-center justify-center flex-wrap p-4'>
         {wishlist?.length > 0 ? wishlist.map((e) => <ProductCard1 product={e.itemId} component={"wishlist"} wishlistItemId={e._id} key={e._id} />)
           :
           <div className='flex flex-col justify-center items-center gap-5 w-full h-[80vh]'>

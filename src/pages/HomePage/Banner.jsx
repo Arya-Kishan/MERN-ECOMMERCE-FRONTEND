@@ -7,7 +7,7 @@ export default function Banner() {
     const navigate = useNavigate()
 
     return (
-        <div>
+        <div className='relative bannerBg'>
 
             <div className='w-full h-[100vh] md:h-[80vh] grid grid-cols-1 md:grid-cols-2 p-2'>
 
@@ -24,6 +24,10 @@ export default function Banner() {
                 <div className='flex flex-col items-center justify-start md:items-start md:justify-center gap-5'><img className='w-[80%]' src={bannerImg} alt="" srcSet="" /></div>
 
             </div>
+
+
+            <div className='circle1'></div>
+            <div className='circle2'></div>
 
         </div>
     )

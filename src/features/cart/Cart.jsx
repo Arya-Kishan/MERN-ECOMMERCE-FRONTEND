@@ -58,7 +58,7 @@ export default function Cart() {
 
 
     return (
-        <div>
+        <div className='p-2'>
             {(cart && cart.length > 0) ?
                 <>
                     <div className="mt-8">
