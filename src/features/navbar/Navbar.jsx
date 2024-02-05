@@ -8,7 +8,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { logoutUser, selectLoggedInUser } from '../auth/authSlice'
+import { selectLoggedInUser, signoutUserAsync } from '../auth/authSlice'
 import { selectcartCount } from '../cart/cartSlice'
 import logo from '../../assets/logo1.png'
 import circle1 from '../../assets/circle1.png'
@@ -162,7 +162,7 @@ export default function Navbar({ children }) {
                                                 <Menu.Item>
                                                     {({ active }) => (
                                                         <li
-                                                            onClick={e => dispatch(logoutUser())}
+                                                            onClick={e => dispatch(signoutUserAsync())}
                                                             className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                                                         >
                                                             Sign out

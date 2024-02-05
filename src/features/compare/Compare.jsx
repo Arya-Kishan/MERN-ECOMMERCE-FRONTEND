@@ -21,7 +21,7 @@ export default function Compare() {
 
             {compareItems.length > 0 ? <>
                 <table>
-                    <thead className='hidden md:flex'>
+                    <thead className='tdSmall'>
                         <tr>
                             <th>Image</th>
                             <th className='tdSmall'>Brand</th>

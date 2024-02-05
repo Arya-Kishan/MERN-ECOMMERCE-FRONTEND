@@ -6,6 +6,7 @@ export function loginUser(user) {
     const response = await fetch("https://my-mern-ecommerce.vercel.app/user/login", {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
+      credentials: "include",
       body: JSON.stringify(user)
     })
     if (response.ok) {
@@ -85,6 +86,30 @@ export function resetPassword(newPassword) {
     } else {
       console.log("CANT RESET PASSWORD REQUEST");
       toast("ERROR OCCURED")
+      reject({ data: null })
+    }
+  });
+}
+
+export function checkUserByToken() {
+  return new Promise(async (resolve, reject) => {
+    const response = await fetch(`https://my-mern-ecommerce.vercel.app/auth/checkUserLoggedIn`, { credentials: "include" })
+    if (response.ok) {
+      const data = await response.json()
+      resolve({ data })
+    } else {
+      reject({ data: null })
+    }
+  });
+}
+
+export function signoutUser() {
+  return new Promise(async (resolve, reject) => {
+    const response = await fetch(`https://my-mern-ecommerce.vercel.app/auth/checkUserLoggedOut`, { credentials: "include" })
+    if (response.ok) {
+      const data = await response.json()
+      resolve({ data })
+    } else {
       reject({ data: null })
     }
   });

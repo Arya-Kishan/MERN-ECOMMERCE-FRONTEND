@@ -5,7 +5,7 @@ import LoginPage from './pages/LoginPage';
 import ProtectedPage from './pages/ProtectedPage';
 import ProtectedAdminPage from './pages/ProtectedAdminPage';
 import { fetchCartItemsAsync } from './features/cart/cartSlice';
-import { selectLoggedInUser } from './features/auth/authSlice';
+import { checkUserByTokenAsync, selectCheckAuth, selectLoggedInUser } from './features/auth/authSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import Loader from './pages/Loader';
 import AdminUsers from './Admin/AdminProductList/components/AdminUsers';
@@ -31,19 +31,24 @@ const ResetPassword = lazy(() => (import('./features/auth/component/ResetPasswor
 export default function App() {
 
   const user = useSelector(selectLoggedInUser)
+  const checkAuth = useSelector(selectCheckAuth)
   const dispatch = useDispatch()
 
   useEffect(() => {
-
     if (user) {
       dispatch(fetchCartItemsAsync(user._id));
+    } else {
+      dispatch(checkUserByTokenAsync())
     }
 
   }, [user])
 
+  console.log("CHECK AUTH TOKEN : " + checkAuth);
+
+
   return (
     <div>
-      <BrowserRouter>
+      {checkAuth ? <BrowserRouter>
         <Suspense fallback={<Loader />} >
           <Routes>
             <Route path='/' element={<ProtectedPage><HomePage></HomePage></ProtectedPage>} />
@@ -69,7 +74,7 @@ export default function App() {
             <Route path='*' element={<PageNotFound />} />
           </Routes>
         </Suspense>
-      </BrowserRouter>
+      </BrowserRouter> : "CHECKING"}
     </div>
   )
 }
