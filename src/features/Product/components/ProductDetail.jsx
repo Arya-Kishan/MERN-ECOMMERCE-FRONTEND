@@ -3,7 +3,7 @@ import AddIcon from '@mui/icons-material/Add';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchProductDetailAsync, fetchProductReviewsByIdAsync, selectDetails, selectReviews } from '../ProductSlice'
+import { fetchProductDetailAsync, fetchProductReviewsByIdAsync, selectDetailStatus, selectDetails, selectReviews } from '../ProductSlice'
 import { AddCartItemAsync, defaultCartStatus, selectcartStatus } from '../../cart/cartSlice'
 import { selectLoggedInUser } from '../../auth/authSlice'
 import { toast } from 'react-toastify';
@@ -11,6 +11,7 @@ import dayjs from 'dayjs'
 import ProductReview from './ProductReview'
 import { Rating } from '@mui/material'
 import RelatedProducts from './RelatedProducts'
+import Loader from '../../../pages/Loader';
 
 
 const product = {
@@ -79,6 +80,7 @@ export default function ProductDetail() {
     const productDetails = useSelector(selectDetails);
     const user = useSelector(selectLoggedInUser);
     const cartStatus = useSelector(selectcartStatus);
+    const detailStatus = useSelector(selectDetailStatus)
     const reviews = useSelector(selectReviews);
     const dispatch = useDispatch();
 
@@ -97,6 +99,7 @@ export default function ProductDetail() {
     useEffect(() => {
         dispatch(fetchProductDetailAsync(id))
         dispatch(fetchProductReviewsByIdAsync(id))
+        scrollTo(0, 0)
     }, [id])
 
     useEffect(() => {
@@ -107,6 +110,11 @@ export default function ProductDetail() {
         }
         dispatch(defaultCartStatus())
     }, [cartStatus])
+
+
+    if (detailStatus == "loading") {
+        return (<Loader />);
+    }
 
     return (
         <div>

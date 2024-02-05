@@ -150,13 +150,13 @@ export default function ProductListSecond({ show }) {
                     {data && data.map((e, i) => (
                         <div key={e._id}>
                             <ProductCard2 product={e} />
-                            {show == "admin" && <div>Edit</div>}
+                            {show == "admin" && <div onClick={() => navigate(`/admin/productForm/${e._id}`)} className='w-full bg-green-400 p-5 my-5 hover:bg-green-700 text-center cursor-pointer'>Edit Product</div>}
                         </div>
                     ))}
                 </>}
                 {!layout && <>
                     {data && data.map((e, i) => (
-                        <div C>
+                        <div key={i}>
                             <ProductCard1 product={e} />
                             {show == "admin" && <div onClick={() => navigate(`/admin/productForm/${e._id}`)} className='w-full bg-green-400 p-5 my-5 hover:bg-green-700 text-center cursor-pointer'>Edit Product</div>}
                         </div>

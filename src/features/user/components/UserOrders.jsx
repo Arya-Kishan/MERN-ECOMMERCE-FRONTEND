@@ -1,13 +1,17 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchOrderAsync, selectOrders } from '../../order/orderSlice'
+import { deleteOrderAsync, fetchOrderAsync, selectOrders } from '../../order/orderSlice'
 import { selectLoggedInUser } from '../../auth/authSlice'
 import dayjs from 'dayjs'
+import { Dialog } from '@mui/material';
+import cart from '../../../assets/cart.png'
 
 export default function UserOrders() {
 
   const orders = useSelector(selectOrders)
   const user = useSelector(selectLoggedInUser)
+  const [orderId, setOrderId] = useState(false);
+  const [showDialog, setShowDialog] = useState(false);
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -31,9 +35,11 @@ export default function UserOrders() {
 
   return (
     <div className='p-2'>
-      {orders.length > 0 && <>
+
+      <h1 className='text-4xl text-center font-bold'>YOUR ORDERS</h1>
+      {orders.length > 0 ? <>
         {orders.map((order) => (
-          <div key={order._id} className='flex flex-col mt-8 bg-slate-200'>
+          <div key={order._id} className='flex flex-col mt-10 bg-slate-200 relative'>
 
             {order.itemId.map((item, i) => (
               <div className='flex flex-col p-2 bg-slate' key={i}>
@@ -68,9 +74,45 @@ export default function UserOrders() {
               <span className={`md:text-xl ${colorChoose(order.status)} p-1`}>{order.status}</span>
             </div>
 
+            {order.status !== "delivered" && <div onClick={e => {
+              setOrderId(order._id)
+              setShowDialog(true)
+            }}
+              className='cursor-pointer bg-slate-200 rounded-sm p-2 absolute -top-7 right-0 text-red-600'>
+              Cancel
+            </div>}
+
           </div>
         ))}
-      </>}
+      </> : "NO ORDERS"}
+
+      <Dialog open={showDialog} onClose={e => setShowDialog(false)} >
+
+        <div className='w-[80vw] md"w-[50vw] h-[30vh] flex flex-col justify-center items-center gap-5 bg-slate-200'>
+
+          <p><img className='w-10 h-10' src={cart} alt="" srcSet="" /></p>
+
+          <p className='text-center text-xl '>ARE YOU SURE TO CANCEL ORDER</p>
+
+          <div className='flex justify-evenly gap-5'>
+
+            <p onClick={e => setShowDialog(false)} className='cursor-pointer bg-red-600 p-2 rounded-md text-center w-[20vw]'>NO</p>
+
+            {/* DELETING ORDER WITH ORDER ID WHICH IS SAVED IN (orderId) STATE */}
+            <p onClick={e => {
+              dispatch(deleteOrderAsync(orderId));
+              setShowDialog(false)
+            }}
+              className='cursor-pointer bg-red-600 p-2 rounded-md text-center w-[20vw]'>
+              YES
+            </p>
+
+          </div>
+
+        </div>
+
+      </Dialog>
+
     </div>
   )
 }

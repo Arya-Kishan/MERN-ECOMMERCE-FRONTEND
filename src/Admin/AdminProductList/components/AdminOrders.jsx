@@ -6,6 +6,8 @@ import dayjs from 'dayjs'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Fragment } from 'react'
 import filterIcon from '../../../app/images/filter.svg'
+import { deleteOrderAsync } from '../../../features/order/orderSlice'
+import DeleteIcon from '@mui/icons-material/Delete';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -16,6 +18,8 @@ export default function AdminOrders() {
 
   const dispatch = useDispatch()
   const orders = useSelector(selectAllOrders)
+  const [order, setOrder] = useState(null)
+  console.log(order);
   const [editOrder, setEditOrder] = useState(-1)
 
   const handleUpdateOrder = (status, id, order) => {
@@ -44,16 +48,26 @@ export default function AdminOrders() {
     }
   }
 
+  const handleDeleteOrder = (orderId, index) => {
+    let newOrder = [...order]
+    newOrder.splice(index, 1)
+    setOrder(newOrder)
+  }
+
   useEffect(() => {
     dispatch(fetchAllOrdersAsync());
   }, [])
+
+  useEffect(() => {
+    setOrder(orders)
+  }, [orders])
 
   return (
     <div className='p-10'>
 
       {/* ORDERS FILTER WITH DATE */}
       <div className='w-full flex justify-between m-2'>
-        <h1 className='flex items-center gap-1 text-xl md:text-4xl'> <ShoppingBagIcon className='w-4 h-4' /> ORDERS :</h1>
+        <h1 className='flex items-center gap-1 text-xl md:text-4xl'> <ShoppingBagIcon style={{ width: '30px' }} /> ORDERS :</h1>
         <div>
           <Menu as="div" className="relative ml-3">
             <div>
@@ -108,11 +122,11 @@ export default function AdminOrders() {
       </div>
 
       {/* ORDERS */}
-      {orders &&
+      {order &&
         <>
-          <div className='flex flex-col gap-5'>
-            {orders.map((order) => (
-              <div className='w-full] flex flex-col p-4 bg-slate-100' key={order.AdminOrders_id}>
+          <div className='flex flex-col gap-20 mt-20'>
+            {order.map((order, i) => (
+              <div className='w-full] flex flex-col p-4 bg-slate-100 relative' key={order._id}>
 
                 <div className='flex flex-col  gap-5 w-full justify-between items-start lg:flex-row'>
                   {/* ORDER ITEMS */}
@@ -195,6 +209,14 @@ export default function AdminOrders() {
 
                 </div>
 
+                <div onClick={e => {
+                  dispatch(deleteOrderAsync(order._id))
+                  // USING BELOW FUNCTION JUST FOR SPLICE ONE ITEM FROM ORDERS ARRAY WHICH IS DELETED
+                  handleDeleteOrder(order._id, i)
+                }}
+                  className='cursor-pointer bg-slate-100 rounded-sm p-2 absolute -top-10 right-0 text-red-600'>
+                  Delete <DeleteIcon />
+                </div>
 
               </div>
             ))}

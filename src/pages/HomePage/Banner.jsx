@@ -16,7 +16,7 @@ export default function Banner() {
                     <div className='flex flex-col items-center md:items-start justify-center gap-5'>
                         <p className='text-2xl md:text-5xl lg:text-10xl'>Online Shopping</p>
                         <p className='text-1xl md:text-3xl lg:text-3xl'>Store full of Desire</p>
-                        <p className='text-2xl bg-blue-600 rounded-md p-2 hover:bg-blue-800 hover:text-white cursor-pointer' onClick={() => navigate("/infiniteScroll/products")}>Explore</p>
+                        <p className='text-2xl bg-blue-600 rounded-md p-3 hover:bg-blue-800 hover:text-white cursor-pointer' onClick={() => navigate("/infiniteScroll/products")}>Explore</p>
                     </div>
 
                 </div>

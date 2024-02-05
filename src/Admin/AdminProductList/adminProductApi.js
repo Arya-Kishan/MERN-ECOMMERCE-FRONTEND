@@ -106,6 +106,24 @@ export function updateUserRole(user) {
   });
 }
 
+export function deleteUser(userId) {
+  return new Promise(async (resolve) => {
+    console.log("deleting user");
+    const response = await fetch(`https://my-mern-ecommerce.vercel.app/user/${userId}`, {
+      method: 'DELETE',
+      headers: { 'content-type': 'application/json' }
+    })
+    if (response.ok) {
+      const data = await response.json()
+      toast("USER DELETED")
+      resolve({ data })
+    } else {
+      toast("USER NOT DELETED")
+      resolve({ data: null })
+    }
+  });
+}
+
 export function fetchSortedOrders(order) {
   return new Promise(async (resolve) => {
     const response = await fetch(`https://my-mern-ecommerce.vercel.app/order?sort=${order}`)

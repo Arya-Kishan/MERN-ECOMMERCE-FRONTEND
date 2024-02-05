@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { AddOrder, deleteAllUserCartItem, fetchOrder, mailOrderReceipt } from './orderApi';
+import { AddOrder, deleteAllUserCartItem, deleteOrder, fetchOrder, mailOrderReceipt } from './orderApi';
 
 const initialState = {
   orders: [],
@@ -28,6 +28,14 @@ export const fetchOrderAsync = createAsyncThunk(
   'order/fetchOrder',
   async (userId) => {
     const response = await fetchOrder(userId);
+    return response.data;
+  }
+);
+
+export const deleteOrderAsync = createAsyncThunk(
+  'order/deleteOrder',
+  async (orderId) => {
+    const response = await deleteOrder(orderId);
     return response.data;
   }
 );
@@ -93,6 +101,14 @@ export const orderSlice = createSlice({
       .addCase(deleteAllUserCartItemAsync.fulfilled, (state, action) => {
         state.status = 'idle';
         state.allCartDeleted = null;
+      })
+      .addCase(deleteOrderAsync.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(deleteOrderAsync.fulfilled, (state, action) => {
+        state.status = 'idle';
+        let index = state.orders.findIndex((e) => e._id === action.payload._id);
+        state.orders.splice(index, 1);
       })
       .addCase(mailOrderReceiptAsync.pending, (state) => {
         state.status = 'loading';

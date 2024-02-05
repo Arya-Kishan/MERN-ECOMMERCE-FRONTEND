@@ -16,16 +16,16 @@ export default function Order() {
         watch,
         formState: { errors },
     } = useForm()
-    const dispatch = useDispatch()
-    const cart = useSelector(selectCartItems)
-    const user = useSelector(selectLoggedInUser)
-    const { userId } = useParams()
     const [paymentMethod, setPaymentMethod] = useState("")
     const [userAddress, setUserAdress] = useState("")
     const [showForm, setShowForm] = useState(false)
-    const navigate = useNavigate()
+    const dispatch = useDispatch()
+    const cart = useSelector(selectCartItems)
+    const user = useSelector(selectLoggedInUser)
     const orderStatus = useSelector(selectOrderStatus)
     const orderAdded = useSelector(selectOrders)
+    const { userId } = useParams()
+    const navigate = useNavigate()
 
 
 
@@ -112,6 +112,7 @@ export default function Order() {
             <div className='grid grid-cols-[1fr] md:grid-cols-[1.3fr,0.7fr]'>
                 <form className='p-5' onSubmit={handleSubmit((data, e) => {
                     handleAddAddress(data, e);
+                    setShowForm(false)
                 })}>
                     {showForm && <>
                         <div className="space-y-12">

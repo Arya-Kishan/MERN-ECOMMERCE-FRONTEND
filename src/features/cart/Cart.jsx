@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { deleteCartItemAsync, fetchCartItemsAsync, selectCartItems, updateCartItemAsync } from './cartSlice'
+import { deleteCartItemAsync, fetchCartItemsAsync, selectCartItems, selectcartStatus, updateCartItemAsync } from './cartSlice'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { MinusIcon, PlusIcon } from '@heroicons/react/24/outline'
 import { selectLoggedInUser } from '../auth/authSlice'
 import { toast } from 'react-toastify'
+import Loader from '../../pages/Loader'
 
 export default function Cart() {
 
     const dispatch = useDispatch()
     const cart = useSelector(selectCartItems);
     const user = useSelector(selectLoggedInUser)
+    const cartStatus = useSelector(selectcartStatus)
     const { userId } = useParams();
     const [total, SetTotal] = useState(0)
     const navigate = useNavigate()
@@ -55,6 +57,10 @@ export default function Cart() {
     useEffect(() => {
         dispatch(fetchCartItemsAsync(userId));
     }, [userId])
+
+    if (cartStatus == "loader") {
+        return (<Loader />);
+    }
 
 
     return (

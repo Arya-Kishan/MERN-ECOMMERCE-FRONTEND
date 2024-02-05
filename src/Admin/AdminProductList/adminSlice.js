@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { AddCategory, AddProduct, fetchAllOrders, fetchAllUsers, fetchSortedOrders, fetchTotalCount, updateOrder, updateUserRole } from './adminProductApi';
+import { AddCategory, AddProduct, deleteUser, fetchAllOrders, fetchAllUsers, fetchSortedOrders, fetchTotalCount, updateOrder, updateUserRole } from './adminProductApi';
 
 const initialState = {
   value: 0,
@@ -67,6 +67,14 @@ export const updateUserRoleAsync = createAsyncThunk(
   'admin/updateUserRole',
   async (user) => {
     const response = await updateUserRole(user);
+    return response.data;
+  }
+);
+
+export const deleteUserAsync = createAsyncThunk(
+  'admin/deleteUser',
+  async (userId) => {
+    const response = await deleteUser(userId);
     return response.data;
   }
 );
@@ -155,11 +163,20 @@ export const adminSlice = createSlice({
         let index = state.getAllUsers.findIndex((e) => e._id === action.payload._id);
         state.getAllUsers.splice(index, 1, action.payload);
       })
+      .addCase(deleteUserAsync.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(deleteUserAsync.fulfilled, (state, action) => {
+        state.status = 'idle';
+        let index = state.getAllUsers.findIndex((e) => e._id === action.payload._id);
+        state.getAllUsers.splice(index, 1);
+      })
   },
 });
 
 export const { increment } = adminSlice.actions;
 
+export const selectAdminStatus = (state) => state.admin.status;
 export const selectAllOrders = (state) => state.admin.orders;
 export const selectAllUsers = (state) => state.admin.getAllUsers;
 export const selecttotalEverthingCounts = (state) => state.admin.totalEverthingCounts;

@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { loginUserAsync, selectLoggedInUser } from '../authSlice';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import logo from '../../../assets/logo1.png'
 
 export default function Login() {
 
@@ -31,7 +32,7 @@ export default function Login() {
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <img
             className="mx-auto h-20 w-auto"
-            src="profile.png"
+            src={logo}
             alt="Your Company"
           />
           <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">

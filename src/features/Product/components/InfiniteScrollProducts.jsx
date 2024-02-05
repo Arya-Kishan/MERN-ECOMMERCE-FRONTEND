@@ -4,7 +4,7 @@ import ProductCard1 from './ProductCard1'
 import InfiniteScroll from 'react-infinite-scroll-component';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchAllBrandsAsync, fetchAllCategoriessAsync, fetchAllProductsAsync, fetchFilteredProductsAsync, selectAllBrands, selectAllCategories, selectAllProducts, selectProductsCount } from '../ProductSlice';
+import { fetchFilteredProductsAsync, selectAllBrands, selectAllCategories, selectAllProducts, selectProductStatus } from '../ProductSlice';
 import MenuIcon from '@mui/icons-material/Menu';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import { Tooltip } from '@mui/material';
@@ -13,34 +13,35 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { useNavigate, useParams } from 'react-router-dom';
 import ProductCard2 from './ProductCard2';
+import Loader from '../../../pages/Loader';
 
 
-let a = 1;
+let a;
 export default function InfiniteScrollProducts() {
 
     const [productsMain, setProductsMain] = useState(null)
     const [stop, setStop] = useState(true)
-    const [data, setData] = useState(null);
-    const [page, setPage] = useState(1);
-    const [paginationCount, setPaginationCount] = useState(12);
+    const [layout, setLayout] = useState(false);
+    const [anchorEl, setAnchorEl] = useState(null);
     const dispatch = useDispatch();
     const products = useSelector(selectAllProducts);
     const categories = useSelector(selectAllCategories);
     const brands = useSelector(selectAllBrands);
-    const [layout, setLayout] = useState(false);
-    const [anchorEl, setAnchorEl] = useState(null);
-    const open = Boolean(anchorEl);
+    const productStatus = useSelector(selectProductStatus);
     const { category: categoryParam } = useParams();
 
+    const open = Boolean(anchorEl);
+
     const fetchData1 = async () => {
-        a = 0;
+        a = 1;
         const { data } = await axios.get(`https://my-mern-ecommerce.vercel.app/product?limit=8&page=1`)
         setProductsMain(data)
     }
 
     const fetchData2 = async () => {
 
-        a++;
+        ++a;
+        console.log(a);
         const { data } = await axios.get(`https://my-mern-ecommerce.vercel.app/product?limit=8&page=${a}`)
         if (data.length < 8) {
             setStop(false)
@@ -84,21 +85,22 @@ export default function InfiniteScrollProducts() {
     }
 
     useEffect(() => {
-        fetchData1()
-        setStop(true)
-    }, [categoryParam == 'products'])
-
-    useEffect(() => {
-        setProductsMain(products)
-    }, [products, categoryParam == 'products'])
-
-    useEffect(() => {
+        if (categoryParam == "products") {
+            fetchData1()
+            setStop(true)
+        }
         if (categoryParam !== "products") {
+            setProductsMain(null)
+            console.log("mkaing call for category");
             dispatch(fetchFilteredProductsAsync({ category: categoryParam }));
             setStop(false)
         }
-    }, [categoryParam !== 'products'])
+    }, [categoryParam])
 
+    useEffect(() => {
+        console.log("SETTING PRODUCTS TO STATE");
+        setProductsMain(products)
+    }, [products])
 
     return (
         <div>
@@ -166,7 +168,7 @@ export default function InfiniteScrollProducts() {
                         dataLength={productsMain.length} //This is important field to render the next data
                         next={fetchData2}
                         hasMore={stop}
-                        loader={<h4 className='flex justify-center p-10'><CircularProgress /></h4>}
+                        loader={<div className='w-full flex justify-center p-10'><CircularProgress /></div>}
                         endMessage={
                             <p className='w-full p-10 flex justify-center'>
                                 <b>Yay! You have seen it all</b>

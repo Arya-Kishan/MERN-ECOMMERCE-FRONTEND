@@ -12,7 +12,7 @@ const initialState = {
   items: null,
   cartCount: null,
   cartStatus: null,
-  status: 'idle',
+  status: 'loading',
 };
 
 

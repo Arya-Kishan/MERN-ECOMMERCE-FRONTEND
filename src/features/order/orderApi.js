@@ -23,6 +23,26 @@ export function fetchOrder(userId) {
   });
 }
 
+export function deleteOrder(orderId) {
+  return new Promise(async (resolve) => {
+    console.log("deleting cart");
+    console.log(orderId);
+    const response = await fetch(`https://my-mern-ecommerce.vercel.app/order/${orderId}`, {
+      method: 'DELETE',
+      headers: { 'content-type': 'application/json' }
+    })
+    if (response.ok) {
+      const data = await response.json()
+      toast(`ORDER DELETED ID : ${orderId}`)
+      resolve({ data })
+    } else {
+      console.log("CANT LOGIN INVALID CREDENTIALS");
+      toast("ORDER NOT DELETED")
+      reject({ data: null })
+    }
+  });
+}
+
 // DELETING ALL CART ITEM OF USER
 export function deleteAllUserCartItem(userId) {
   return new Promise(async (resolve) => {

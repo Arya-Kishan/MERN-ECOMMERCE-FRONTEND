@@ -10,8 +10,10 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { logoutUser, selectLoggedInUser } from '../auth/authSlice'
 import { selectcartCount } from '../cart/cartSlice'
-import navbarIcon from '../../assets/profile.png'
+import logo from '../../assets/logo1.png'
 import circle1 from '../../assets/circle1.png'
+import { selectWishlistCount } from '../wishlist/wishlistSlice';
+import { selectCompareCount } from '../compare/compareSlice';
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -23,6 +25,8 @@ export default function Navbar({ children }) {
     const navigate = useNavigate();
     const user = useSelector(selectLoggedInUser)
     const cartCount = useSelector(selectcartCount)
+    const wishlistCount = useSelector(selectWishlistCount)
+    const compareCount = useSelector(selectCompareCount)
     const dispatch = useDispatch()
 
     const handleNavigate = (e) => {
@@ -56,7 +60,7 @@ export default function Navbar({ children }) {
                                     <div className="flex flex-shrink-0 items-center gap-2">
                                         <img
                                             className="h-8 w-auto"
-                                            src={navbarIcon}
+                                            src={logo}
                                             alt="Your Company"
                                         />
                                         <span className='text-2xl text-white'>Aryazon</span>
@@ -80,7 +84,7 @@ export default function Navbar({ children }) {
                                         <span className="sr-only">View notifications</span>
                                         <span className='relative'>
                                             <FavoriteIcon />
-                                            <span className='absolute top-[-10px] right-[-10px]'>{cartCount}</span>
+                                            <span className='absolute top-[-10px] right-[-10px]'>{wishlistCount}</span>
                                         </span>
                                     </button>
 
@@ -108,6 +112,7 @@ export default function Navbar({ children }) {
                                         <span className="sr-only">View notifications</span>
                                         <span className='relative'>
                                             <CompareArrows />
+                                            <span className='absolute top-[-10px] right-[-10px]'>{compareCount}</span>
                                         </span>
                                     </button>
 
@@ -175,11 +180,9 @@ export default function Navbar({ children }) {
                             <div className="flex flex-col gap-1 
                             space-y-1 px-2 pb-3 pt-2">
                                 {user.role == "admin" && <Link to={'/admin/productList'} className='w-full bg-gray-900 text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-base font-medium'>Admin</Link>}
-                                {user.role == "user" && (<div>
-                                    <Link to={'/wishlist'} className='w-full bg-gray-900 text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-base font-medium'>Wishlist</Link>
-                                    <Link to={'/compare'} className='w-full bg-gray-900 text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-base font-medium'>Compare</Link>
-                                    <Link to={`/cart/${user._id}`} className='w-full bg-gray-900 text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-base font-medium'>Cart</Link>
-                                </div>)}
+                                <Link to={'/wishlist'} className='w-full bg-gray-900 text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-base font-medium'>Wishlist  <span className='text-gray-600'> - {wishlistCount}</span></Link>
+                                <Link to={'/compare'} className='w-full bg-gray-900 text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-base font-medium'>Compare  <span className='text-gray-600'> - {compareCount}</span></Link>
+                                <Link to={`/cart/${user._id}`} className='w-full bg-gray-900 text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-base font-medium'>Cart  <span className='text-gray-600'> - {cartCount}</span></Link>
                             </div>
                         </Disclosure.Panel>
                     </>

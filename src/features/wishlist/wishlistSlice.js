@@ -8,7 +8,7 @@ import { AddWishlist, deleteWishlist, fetchWishlist } from './wishlistApi';
 const initialState = {
     wishlistItems: null,
     wishlistCount: 0,
-    status: 'idle',
+    status: 'loading',
 };
 
 
@@ -87,6 +87,7 @@ export const wishlistSlice = createSlice({
 
 export const { defaultCartStatus } = wishlistSlice.actions;
 
+export const selectWishlistStatus = (state) => state.wishlist?.status;
 export const selectWishlist = (state) => state.wishlist?.wishlistItems;
 export const selectWishlistCount = (state) => state.wishlist?.wishlistCount;
 

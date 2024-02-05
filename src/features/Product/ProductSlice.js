@@ -9,7 +9,8 @@ const initialState = {
   details: null,
   reviews: [],
   relatedProducts: null,
-  status: 'idle',
+  status: 'loading',
+  detailStatus: 'loading',
 };
 
 
@@ -118,8 +119,8 @@ export const productSlice = createSlice({
   name: 'product',
   initialState,
   reducers: {
-    increment: (state) => {
-      state.value += 1;
+    setProductsArrayToNull: (state) => {
+      state.products = null;
     },
   },
 
@@ -156,10 +157,10 @@ export const productSlice = createSlice({
         state.products = action.payload.data;
       })
       .addCase(fetchProductDetailAsync.pending, (state) => {
-        state.status = 'loading';
+        state.detailStatus = 'loading';
       })
       .addCase(fetchProductDetailAsync.fulfilled, (state, action) => {
-        state.status = 'idle';
+        state.detailStatus = 'idle';
         state.details = action.payload;
       })
       .addCase(updateProductByIdAsync.pending, (state) => {
@@ -207,7 +208,7 @@ export const productSlice = createSlice({
 
 
 
-export const { increment } = productSlice.actions;
+export const { setProductsArrayToNull } = productSlice.actions;
 
 export const selectAllProducts = (state) => state.product.products;
 export const selectDetails = (state) => state.product.details;
@@ -216,5 +217,7 @@ export const selectAllCategories = (state) => state.product.categories;
 export const selectAllBrands = (state) => state.product.brands;
 export const selectReviews = (state) => state.product.reviews;
 export const selectrelatedProducts = (state) => state.product.relatedProducts;
+export const selectDetailStatus = (state) => state.product.detailStatus;
+export const selectProductStatus = (state) => state.product.status;
 
 export default productSlice.reducer;

@@ -11,7 +11,8 @@ import { addComapareItem } from '../../compare/compareSlice';
 
 export default function ProductCard1({ product, component, wishlistItemId }) {
 
-  const [change, setChange] = useState(false)
+  const [change1, setChange1] = useState(false)
+  const [change2, setChange2] = useState(false)
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const user = useSelector(selectLoggedInUser)
@@ -36,10 +37,10 @@ export default function ProductCard1({ product, component, wishlistItemId }) {
         <div className='absolute top-1 right-1 flex flex-col gap-1' onClick={e => e.stopPropagation()}>
 
           <button onClick={(e) => {
-            setChange(true)
+            setChange1(true)
             handleWishlistAdd()
           }}>
-            {component == 'wishlist' ? "" : change ? <FavoriteIcon style={{ color: "red" }} /> : <FavoriteIcon />}
+            {component == 'wishlist' ? "" : change1 ? <FavoriteIcon style={{ color: "red" }} /> : <FavoriteIcon style={{ color: "white", background: 'black', borderRadius: "50%", padding: '3px' }} />}
           </button>
 
           <button onClick={() => handleWishlistDelete(wishlistItemId)}>
@@ -47,8 +48,9 @@ export default function ProductCard1({ product, component, wishlistItemId }) {
           </button>
 
           <button className="cursor-pointer" onClick={(e) => {
+            setChange2(true)
             dispatch(addComapareItem(product))
-          }}><CompareArrowsIcon /></button>
+          }}>{change2 ? <CompareArrowsIcon /> : <CompareArrowsIcon style={{ color: "white", background: 'black', borderRadius: "50%", padding: '3px' }} />}</button>
 
         </div>
 
@@ -57,7 +59,7 @@ export default function ProductCard1({ product, component, wishlistItemId }) {
         <div className='w-full flex flex-col justify-between h-full p-2'>
 
           <div className='text-start'>
-            <p className='text-[14px] md:text-xl'>{product.title.split(" ").slice(0,2).join(" ")}</p>
+            <p className='text-[14px] md:text-xl'>{product.title.split(" ").slice(0, 2).join(" ")}</p>
             <p className='hidden md:flex text-gray-400'>{product.description}</p>
           </div>
 
@@ -67,7 +69,7 @@ export default function ProductCard1({ product, component, wishlistItemId }) {
               <Rating
                 name="simple-controlled"
                 value={product.rating}
-                style={{fontSize:"12px"}}
+                style={{ fontSize: "12px" }}
               />
             </span>
           </p>

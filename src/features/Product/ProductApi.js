@@ -73,8 +73,15 @@ export function deleteProduct(productId) {
       method: 'DELETE',
       headers: { 'content-type': 'application/json' }
     })
-    const data = await response.json()
-    resolve({ data })
+    if (response.ok) {
+      const data = await response.json()
+      toast("Deleted")
+      resolve({ data })
+    } else {
+      console.log("Cant't Delete");
+      toast("Cant't Delete")
+      reject({ data: null })
+    }
   });
 }
 

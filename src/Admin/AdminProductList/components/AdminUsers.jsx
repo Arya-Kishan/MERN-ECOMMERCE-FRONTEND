@@ -1,19 +1,22 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchAllUsersAsync, selectAllUsers, updateUserRoleAsync } from '../adminSlice'
+import { deleteUserAsync, fetchAllUsersAsync, selectAllUsers, updateUserRoleAsync } from '../adminSlice'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import EditIcon from '@mui/icons-material/Edit';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import StarBorderPurple500Icon from '@mui/icons-material/StarBorderPurple500';
+import { Dialog } from '@mui/material';
 
 export default function AdminUsers() {
 
   const [showAddress, setShowAddress] = useState(null)
   const [showRole, setShowRole] = useState(null)
+  const [showDialog, setShowDialog] = useState(false)
+  // SAVED USERID IN BELOW STATE TO DELETE BECOZ DIALOG ELEMENT IS OUT OF MAP
+  const [userId, setUserId] = useState(false)
   const dispatch = useDispatch()
   const users = useSelector(selectAllUsers)
-  console.log(users);
 
   const handleUserRole = (e, userId) => {
     console.log(e.target.value, userId);
@@ -21,6 +24,11 @@ export default function AdminUsers() {
       dispatch(updateUserRoleAsync({ id: userId, role: e.target.value }));
     }
     setShowRole(null)
+  }
+
+  const handleDeleteUser = (userId) => {
+    setShowDialog(true)
+    setUserId(userId)
   }
 
   useEffect(() => {
@@ -39,7 +47,7 @@ export default function AdminUsers() {
             {user.role == "admin" && <StarBorderPurple500Icon className='absolute -top-3 left-0 w-4 h-4 stroke-yellow-400' />}
 
             {/* USER INFO */}
-            <div className='w-full flex justify-between px-5 py-5'>
+            <div className='w-full flex justify-between px-5 py-5 relative'>
 
               <p className='flex gap-1 items-center'><AccountCircleIcon className='w-4 h-4' />{user.name}</p>
 
@@ -66,6 +74,8 @@ export default function AdminUsers() {
                 </select>}
               </div>
 
+              {user.role == "user" && <div onClick={e => handleDeleteUser(user._id)} className='absolute -top-7 right-0 bg-slate-200 p-1 rounded-sm cursor-pointer'>Delete</div>}
+
             </div>
 
             {/* ADDRESSES */}
@@ -89,6 +99,19 @@ export default function AdminUsers() {
         ))}
 
       </div>
+
+      <Dialog open={showDialog} onClose={e => setShowDialog(false)}>
+        <div className='w-[50vh] h=[30vh] flex flex-col gap-5 p-5 bg-gray-300'>
+          <p className='text-center text-xl'>Are You Sure !</p>
+          <div className='flex justify-evenly'>
+            <p className='bg-red-500 p-2 rounded-md cursor-pointer' onClick={e => setShowDialog(false)}>Cancel</p>
+            <p className='bg-red-500 p-2 rounded-md cursor-pointer' onClick={e => {
+              setShowDialog(false)
+              dispatch(deleteUserAsync(userId))
+            }}>Delete</p>
+          </div>
+        </div>
+      </Dialog>
 
     </div>
   )

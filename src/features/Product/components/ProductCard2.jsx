@@ -3,9 +3,8 @@ import React, { useState } from 'react'
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { AddWishlistAsync, deleteWishlistAsync } from '../../wishlist/wishlistSlice';
+import { AddWishlistAsync } from '../../wishlist/wishlistSlice';
 import { selectLoggedInUser } from '../../auth/authSlice';
-import CloseIcon from '@mui/icons-material/Close';
 import CompareArrowsIcon from '@mui/icons-material/CompareArrows';
 import { addComapareItem } from '../../compare/compareSlice';
 
@@ -26,7 +25,7 @@ export default function ProductCard2({ product, component, wishlistItemId }) {
     }
 
     return (
-        <div className='flex gap-1 border-solid border-2 border-black-900 w-[100vw] lg:w-[45vw] hover:duration-200 hover:-translate-y-3 hover:bg-gray-300 mx-2 cursor-pointer' onClick={handleDetail}>
+        <div className='flex gap-1 border-solid border-2 border-black-900 w-[95vw] lg:w-[45vw] hover:duration-200 hover:-translate-y-3 hover:bg-gray-300 mx-2 cursor-pointer' onClick={handleDetail}>
 
             <img className='w-20 md:w-40 md:p-10' src={product.thumbnail}></img>
 
@@ -37,15 +36,26 @@ export default function ProductCard2({ product, component, wishlistItemId }) {
                         <p>{product.title}</p>
                         <p className='hidden md:flex'>{product.description}</p>
                     </div>
+
                     <div onClick={e => e.stopPropagation()} className='flex gap-4'>
+
                         <button onClick={(e) => {
                             setChange(true)
                             handleWishlistAdd()
-                        }}>{change ? <FavoriteIcon style={{ color: "red" }} /> : <FavoriteIcon />}</button>
-                        <button className="cursor-pointer" onClick={(e) => {
-                            dispatch(addComapareItem(product))
-                        }}><CompareArrowsIcon /></button>
+                        }}>
+                            {change ? <FavoriteIcon style={{ color: "red" }} /> : <FavoriteIcon style={{ color: "white", background: 'black', borderRadius: "50%", padding: '3px' }} />}
+                        </button>
+
+                        <button
+                            className="cursor-pointer"
+                            onClick={(e) => {
+                                dispatch(addComapareItem(product))
+                            }}>
+                            <CompareArrowsIcon />
+                        </button>
+
                     </div>
+
                 </div>
 
                 <p className='w-full flex justify-between'>

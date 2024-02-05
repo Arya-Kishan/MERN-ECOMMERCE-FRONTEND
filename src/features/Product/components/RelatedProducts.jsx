@@ -38,10 +38,10 @@ export default function RelatedProducts({ id }) {
         <div>
             {relatedProducts && <div className="bg-white">
                 <div className="mx-auto max-w-2xl px-2 py-0 sm:px-2 sm:py-0 lg:max-w-7xl lg:px-2">
-                    <h2 className="text-2xl font-bold tracking-tight text-gray-900">Customers also purchased related products</h2>
+                    <h2 className="text-2xl font-bold tracking-tight text-gray-900">Related Products</h2>
 
-                    <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
-                        {data?.map((product) => (
+                    <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8 p-3">
+                        {data && data.length > 1 ? data?.map((product) => (
                             <div onClick={e => handleDetail(e, product._id)} key={product._id} className="group relative">
 
                                 <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
@@ -74,7 +74,7 @@ export default function RelatedProducts({ id }) {
 
 
                             </div>
-                        ))}
+                        )) : "---- NO RELATED PRODUCTS ----"}
                     </div>
                 </div>
             </div>}
