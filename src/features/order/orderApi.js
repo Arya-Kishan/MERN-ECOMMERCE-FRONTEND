@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 export function AddOrder(order) {
   return new Promise(async (resolve) => {
     console.log(order);
-    const response = await fetch("https://my-mern-ecommerce.vercel.app/order", {
+    const response = await fetch("https://mern-ecommerce-backend-plnp.onrender.com/order", {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify(order)
@@ -17,7 +17,7 @@ export function AddOrder(order) {
 
 export function fetchOrder(userId) {
   return new Promise(async (resolve) => {
-    const response = await fetch(`https://my-mern-ecommerce.vercel.app/order/${userId}`)
+    const response = await fetch(`https://mern-ecommerce-backend-plnp.onrender.com/order/${userId}`)
     const data = await response.json()
     resolve({ data })
   });
@@ -27,7 +27,7 @@ export function deleteOrder(orderId) {
   return new Promise(async (resolve) => {
     console.log("deleting cart");
     console.log(orderId);
-    const response = await fetch(`https://my-mern-ecommerce.vercel.app/order/${orderId}`, {
+    const response = await fetch(`https://mern-ecommerce-backend-plnp.onrender.com/order/${orderId}`, {
       method: 'DELETE',
       headers: { 'content-type': 'application/json' }
     })
@@ -46,7 +46,7 @@ export function deleteOrder(orderId) {
 // DELETING ALL CART ITEM OF USER
 export function deleteAllUserCartItem(userId) {
   return new Promise(async (resolve) => {
-    const response = await fetch(`https://my-mern-ecommerce.vercel.app/cart/user/${userId}`, {
+    const response = await fetch(`https://mern-ecommerce-backend-plnp.onrender.com/cart/user/${userId}`, {
       method: 'DELETE',
       headers: { 'content-type': 'application/json' }
     })
@@ -59,7 +59,7 @@ export function deleteAllUserCartItem(userId) {
 export function mailOrderReceipt(order) {
   return new Promise(async (resolve) => {
     console.log(order);
-    const response = await fetch("https://my-mern-ecommerce.vercel.app/order/mailOrder", {
+    const response = await fetch("https://mern-ecommerce-backend-plnp.onrender.com/order/mailOrder", {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify(order)

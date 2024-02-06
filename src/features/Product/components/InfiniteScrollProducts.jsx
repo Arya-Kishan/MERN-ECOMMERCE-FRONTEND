@@ -34,7 +34,7 @@ export default function InfiniteScrollProducts() {
 
     const fetchData1 = async () => {
         a = 1;
-        const { data } = await axios.get(`https://my-mern-ecommerce.vercel.app/product?limit=8&page=1`)
+        const { data } = await axios.get(`https://mern-ecommerce-backend-plnp.onrender.com/product?limit=8&page=1`)
         setProductsMain(data)
     }
 
@@ -42,7 +42,7 @@ export default function InfiniteScrollProducts() {
 
         ++a;
         console.log(a);
-        const { data } = await axios.get(`https://my-mern-ecommerce.vercel.app/product?limit=8&page=${a}`)
+        const { data } = await axios.get(`https://mern-ecommerce-backend-plnp.onrender.com/product?limit=8&page=${a}`)
         if (data.length < 8) {
             setStop(false)
         }

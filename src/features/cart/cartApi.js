@@ -2,7 +2,7 @@
 
 export function AddCartItem(cartItem) {
   return new Promise(async (resolve) => {
-    const response = await fetch("https://my-mern-ecommerce.vercel.app/cart", {
+    const response = await fetch("https://mern-ecommerce-backend-plnp.onrender.com/cart", {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify(cartItem)
@@ -15,7 +15,7 @@ export function AddCartItem(cartItem) {
 
 export function fetchCartItems(userId) {
   return new Promise(async (resolve) => {
-    const response = await fetch(`https://my-mern-ecommerce.vercel.app/cart/${userId}`)
+    const response = await fetch(`https://mern-ecommerce-backend-plnp.onrender.com/cart/${userId}`)
     const data = await response.json()
     resolve({ data })
   });
@@ -25,7 +25,7 @@ export function deleteCartItem(cartId) {
   return new Promise(async (resolve) => {
     console.log("deleting cart");
     console.log(cartId);
-    const response = await fetch(`https://my-mern-ecommerce.vercel.app/cart/${cartId}`, {
+    const response = await fetch(`https://mern-ecommerce-backend-plnp.onrender.com/cart/${cartId}`, {
       method: 'DELETE',
       headers: { 'content-type': 'application/json' }
     })
@@ -39,7 +39,7 @@ export function deleteCartItem(cartId) {
 export function updateCartItem(cart) {
   return new Promise(async (resolve) => {
     console.log(cart);
-    const response = await fetch(`https://my-mern-ecommerce.vercel.app/cart/${cart.id}`, {
+    const response = await fetch(`https://mern-ecommerce-backend-plnp.onrender.com/cart/${cart.id}`, {
       method: 'PATCH',
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify({ quantity: cart.quantity })
