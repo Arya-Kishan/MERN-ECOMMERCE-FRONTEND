@@ -18,8 +18,10 @@ export const checkUserByTokenAsync = createAsyncThunk(
   async (a, { rejectWithValue }) => {
     try {
       const response = await checkUserByToken();
+      console.log("VALIDATED WITH TOKEN");
       return response.data;
     } catch (error) {
+      console.log("CAN'T VALIDAT WITH TOKEN");
       console.log(error);
       return rejectWithValue(error);
     }

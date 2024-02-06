@@ -76,7 +76,7 @@ export default function Order() {
         const stripe = await loadStripe("pk_test_51OTSOaSCLk89VVV2y65ICM1KafKVLbOIhdp06xHCYFST0x3lQGymFiCjyl2Ji6qOcmmugvwPipgsLxtF6bDOhcNM00Msw33mYG")
 
 
-        let res = await fetch("https://my-mern-ecommerce.vercel.app/create-checkout-session", {
+        let res = await fetch("https://my-mern-ecommerce.vercel.app//create-checkout-session", {
             method: "POST",
             headers: {
                 "Content-type": "application/json"

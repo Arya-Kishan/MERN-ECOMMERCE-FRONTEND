@@ -74,7 +74,7 @@ export default function App() {
             <Route path='*' element={<PageNotFound />} />
           </Routes>
         </Suspense>
-      </BrowserRouter> : "CHECKING"}
+      </BrowserRouter> : <Loader />}
     </div>
   )
 }
