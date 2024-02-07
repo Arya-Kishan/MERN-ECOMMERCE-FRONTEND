@@ -88,7 +88,7 @@ export default function UserOrders() {
 
       <Dialog open={showDialog} onClose={e => setShowDialog(false)} >
 
-        <div className='w-[80vw] md"w-[50vw] h-[30vh] flex flex-col justify-center items-center gap-5 bg-slate-200'>
+        <div className='w-full h-[30vh] flex flex-col p-5 justify-center items-center gap-5 bg-slate-200'>
 
           <p><img className='w-10 h-10' src={cart} alt="" srcSet="" /></p>
 
@@ -96,14 +96,14 @@ export default function UserOrders() {
 
           <div className='flex justify-evenly gap-5'>
 
-            <p onClick={e => setShowDialog(false)} className='cursor-pointer bg-red-600 p-2 rounded-md text-center w-[20vw]'>NO</p>
+            <p onClick={e => setShowDialog(false)} className='cursor-pointer bg-red-600 p-2 rounded-md text-center w-[100px]'>NO</p>
 
             {/* DELETING ORDER WITH ORDER ID WHICH IS SAVED IN (orderId) STATE */}
             <p onClick={e => {
               dispatch(deleteOrderAsync(orderId));
               setShowDialog(false)
             }}
-              className='cursor-pointer bg-red-600 p-2 rounded-md text-center w-[20vw]'>
+              className='cursor-pointer bg-red-600 p-2 rounded-md text-center w-[100px]'>
               YES
             </p>
 

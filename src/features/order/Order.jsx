@@ -32,7 +32,7 @@ export default function Order() {
 
     const handleAddAddress = (data, e) => {
         e.preventDefault();
-        let newAddress = { id: userId, addresses: [...user.addresses, data] }
+        let newAddress = { id: userId, addresses: [...user.addresses, data],message:"ADD" }
         dispatch(updateUserAddressesAsync(newAddress))
     }
 
@@ -76,7 +76,7 @@ export default function Order() {
         const stripe = await loadStripe("pk_test_51OTSOaSCLk89VVV2y65ICM1KafKVLbOIhdp06xHCYFST0x3lQGymFiCjyl2Ji6qOcmmugvwPipgsLxtF6bDOhcNM00Msw33mYG")
 
 
-        let res = await fetch("https://mern-ecommerce-backend-plnp.onrender.com/create-checkout-session", {
+        let res = await fetch("http://localhost:8080/create-checkout-session", {
             method: "POST",
             headers: {
                 "Content-type": "application/json"

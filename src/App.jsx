@@ -5,13 +5,15 @@ import LoginPage from './pages/LoginPage';
 import ProtectedPage from './pages/ProtectedPage';
 import ProtectedAdminPage from './pages/ProtectedAdminPage';
 import { fetchCartItemsAsync } from './features/cart/cartSlice';
-import { checkUserByTokenAsync, selectCheckAuth, selectLoggedInUser } from './features/auth/authSlice';
+import { selectLoggedInUser } from './features/auth/authSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import Loader from './pages/Loader';
 import AdminUsers from './Admin/AdminProductList/components/AdminUsers';
+import InfiniteScrollPage from './pages/InfiniteScrollPage';
+import Practice from './pages/Practice';
+import axios from 'axios';
 const WishlistPage = lazy(() => (import('./pages/WishlistPage')))
 const ComparePage = lazy(() => (import('./pages/ComparePage')))
-const InfiniteScrollProducts = lazy(() => (import('./features/Product/components/InfiniteScrollProducts')))
 const ProductDetailPage = lazy(() => (import('./pages/ProductDetailPage')))
 const CartPage = lazy(() => (import('./pages/CartPage')))
 const HomePage = lazy(() => (import('./pages/HomePage')))
@@ -30,27 +32,23 @@ const ResetPassword = lazy(() => (import('./features/auth/component/ResetPasswor
 
 export default function App() {
 
+  axios.defaults.headers.common["jwt-routes"] = `${localStorage.getItem("jwt-routes")}`
   const user = useSelector(selectLoggedInUser)
-  const checkAuth = useSelector(selectCheckAuth)
   const dispatch = useDispatch()
 
   useEffect(() => {
     if (user) {
       dispatch(fetchCartItemsAsync(user._id));
-    } else {
-      dispatch(checkUserByTokenAsync())
     }
-
   }, [user])
-
-  console.log("CHECK AUTH TOKEN : " + checkAuth);
 
 
   return (
     <div>
-      {checkAuth ? <BrowserRouter>
+      <BrowserRouter>
         <Suspense fallback={<Loader />} >
           <Routes>
+            <Route path='/practice' element={<Practice />} />
             <Route path='/' element={<ProtectedPage><HomePage></HomePage></ProtectedPage>} />
             <Route path='/signup' element={<SignupPage />} />
             <Route path='/login' element={<LoginPage />} />
@@ -61,7 +59,7 @@ export default function App() {
             <Route path='/userProfile/:userId' element={<ProtectedPage><UserProfilePage /></ProtectedPage>} />
             <Route path='/wishlist' element={<ProtectedPage><WishlistPage /></ProtectedPage>} />
             <Route path='/compare' element={<ProtectedPage><ComparePage /></ProtectedPage>} />
-            <Route path='/infiniteScroll/:category' element={<ProtectedPage><InfiniteScrollProducts /></ProtectedPage>} />
+            <Route path='/infiniteScroll/:category' element={<ProtectedPage><InfiniteScrollPage /></ProtectedPage>} />
             <Route path='/forgotPassword' element={<ForgotPassword />} />
             <Route path='/resetPassword' element={<ResetPassword />} />
             <Route path='/orderSuccess/:orderId' element={<OrderSuccess />} />
@@ -74,7 +72,7 @@ export default function App() {
             <Route path='*' element={<PageNotFound />} />
           </Routes>
         </Suspense>
-      </BrowserRouter> : <Loader />}
+      </BrowserRouter>
     </div>
   )
 }

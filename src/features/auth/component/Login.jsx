@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Link, Navigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { loginUserAsync, selectLoggedInUser } from '../authSlice';
+import { checkUserSessionAsync, loginUserAsync, selectLoggedInUser } from '../authSlice';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import logo from '../../../assets/logo1.png'
@@ -102,6 +102,7 @@ export default function Login() {
           </p>
         </div>
       </div>
+      <button onClick={e=>dispatch(checkUserSessionAsync())}>CHECK</button>
     </div>
   )
 }

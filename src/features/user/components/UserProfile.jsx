@@ -19,7 +19,7 @@ export default function UserProfile() {
 
 
   const handleAddAddress = (data) => {
-    let newAddress = { id: user._id, addresses: [...user.addresses, data] }
+    let newAddress = { id: user._id, addresses: [...user.addresses, data], message: "ADD" }
     console.log(newAddress);
     dispatch(updateUserAddressesAsync(newAddress))
   }
@@ -27,7 +27,7 @@ export default function UserProfile() {
   const handleDeleteAddress = (addressIndex) => {
     let addresses = [...user.addresses]
     addresses.splice(addressIndex, 1)
-    let newAddress = { id: user._id, addresses: [...addresses] }
+    let newAddress = { id: user._id, addresses: [...addresses], message: "DELETE" }
     dispatch(updateUserAddressesAsync(newAddress))
   }
 
@@ -202,7 +202,7 @@ export default function UserProfile() {
               {user?.addresses.map((address, i) => (
                 <div key={i} className="w-full flex flex-col justify-between gap-3 p-2 border-solid border-2 border-gray-200 relative">
 
-                  <div onClick={() => handleDeleteAddress(i)} className='text-end absolute -top-7 right-0 bg-gray-100 cursor-pointer hover:bg-red-400'>Delete <ClearIcon/></div>
+                  <div onClick={() => handleDeleteAddress(i)} className='text-end absolute -top-7 right-0 bg-gray-100 cursor-pointer hover:bg-red-400'>Delete <ClearIcon /></div>
 
                   <div className="w-full flex justify-between">
                     <p className="text-sm font-semibold leading-6 text-gray-900">{address.firstName}</p>

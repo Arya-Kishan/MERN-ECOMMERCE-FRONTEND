@@ -1,20 +1,33 @@
 // A mock function to mimic making an async request for data
+import axios from "axios";
 import { toast } from "react-toastify";
 
 export function fetchTotalCount(total) {
-  return new Promise(async (resolve) => {
-    const response = await fetch(`https://mern-ecommerce-backend-plnp.onrender.com/count`)
-    const data = await response.json()
-    resolve({ data })
+  return new Promise(async (resolve, reject) => {
+    try {
+      const { data } = await axios.get(`/count`)
+      resolve({ data })
+    } catch (error) {
+      reject({ data: null })
+    }
   });
 }
 
 // FETCHING ALL USERS
 export function fetchAllUsers() {
-  return new Promise(async (resolve) => {
-    const response = await fetch(`https://mern-ecommerce-backend-plnp.onrender.com/user`)
-    const data = await response.json()
-    resolve({ data })
+  return new Promise(async (resolve, reject) => {
+
+    try {
+      const { data } = await axios.get(`/user`)
+      console.log(data);
+      resolve({ data })
+    } catch (error) {
+      console.log("CANT LOGIN INVALID CREDENTIALS");
+      toast("INVALID CREDENTIALS")
+      reject({ data: null })
+    }
+
+
   });
 }
 
@@ -26,108 +39,95 @@ export function AddProduct(product) {
     }
   }
 
-  return new Promise(async (resolve) => {
-    const response = await fetch("https://mern-ecommerce-backend-plnp.onrender.com/product", {
-      method: 'POST',
-      headers: config,
-      body: product
-    })
-    if (response.ok) {
-      const data = await response.json()
+  return new Promise(async (resolve, reject) => {
+    try {
+      const { data } = await axios.post("/product", product, { headers: config })
+      console.log("ADDING PRODUCT");
       toast("PRODUCT ADDED")
       resolve({ data })
-    } else {
-      resolve({ data: null })
+    } catch (error) {
+      console.log("PRODUCT CAN'T ADDED");
+      toast("PRODUCT NOT ADDED")
+      reject({ data: null })
     }
   });
+
 }
 
 
 export function AddCategory(category) {
-  return new Promise(async (resolve) => {
-    const response = await fetch("https://mern-ecommerce-backend-plnp.onrender.com/categories", {
-      method: 'POST',
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify(category)
-    })
-    if (response.ok) {
-      const data = await response.json()
+  return new Promise(async (resolve, reject) => {
+    try {
+      const { data } = await axios.post("/categories", category)
       toast("CATEOGORY ADDED")
       resolve({ data })
-    } else {
+    } catch (error) {
+      console.log("CATEGORY NOT ADDED");
       toast("ERROR CATEOGORY NOT ADDED")
-      resolve({ data: null })
+      reject({ data: null })
     }
   });
 }
 
 export function fetchAllOrders() {
-  return new Promise(async (resolve) => {
-    const response = await fetch(`https://mern-ecommerce-backend-plnp.onrender.com/order`)
-    const data = await response.json()
-    resolve({ data })
-
-  });
-}
-
-export function updateOrder(order) {
-  return new Promise(async (resolve) => {
-    const response = await fetch(`https://mern-ecommerce-backend-plnp.onrender.com/order/${order.id}`, {
-      method: 'PATCH',
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ status: order.status, itemsId: order.items })
-    })
-    if (response.ok) {
-      const data = await response.json()
-      toast("ORDER UPDATED")
+  return new Promise(async (resolve, reject) => {
+    try {
+      const { data } = await axios.get("/order")
       resolve({ data })
-    } else {
-      toast("ERROR ORDER NOT UPDATED")
-      resolve({ data: null })
+    } catch (error) {
+      reject({ data: null })
     }
   });
 }
 
+export function updateOrder(order) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const { data } = await axios.patch(`/order/${order.id}`, { status: order.status, itemsId: order.items })
+      toast("ORDER UPDATED")
+      resolve({ data })
+    } catch (error) {
+      toast("ORDER NOT UPDATED")
+      reject({ data: null })
+    }
+
+  });
+}
+
 export function updateUserRole(user) {
-  return new Promise(async (resolve) => {
-    const response = await fetch(`https://mern-ecommerce-backend-plnp.onrender.com/user/${user.id}`, {
-      method: 'PATCH',
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ role: user.role })
-    })
-    if (response.ok) {
-      const data = await response.json()
+  return new Promise(async (resolve, reject) => {
+    try {
+      const { data } = await axios.patch(`/user/${user.id}`, { role: user.role })
       toast("ROLE UPDATED")
       resolve({ data })
-    } else {
-      toast("ERROR ROLE NOT UPDATED")
-      resolve({ data: null })
+    } catch (error) {
+      toast("ROLE NOT UPDATED")
+      reject({ data: null })
     }
   });
 }
 
 export function deleteUser(userId) {
-  return new Promise(async (resolve) => {
+  return new Promise(async (resolve, reject) => {
     console.log("deleting user");
-    const response = await fetch(`https://mern-ecommerce-backend-plnp.onrender.com/user/${userId}`, {
-      method: 'DELETE',
-      headers: { 'content-type': 'application/json' }
-    })
-    if (response.ok) {
-      const data = await response.json()
+    try {
+      const { data } = await axios.delete(`/user/${userId}`)
       toast("USER DELETED")
       resolve({ data })
-    } else {
+    } catch (error) {
       toast("USER NOT DELETED")
-      resolve({ data: null })
+      reject({ data: null })
     }
   });
 }
 
 export function fetchSortedOrders(order) {
-  return new Promise(async (resolve) => {
-    const response = await fetch(`https://mern-ecommerce-backend-plnp.onrender.com/order?sort=${order}`)
-    const data = await response.json()
-    resolve({ data })
+  return new Promise(async (resolve, reject) => {
+    try {
+      const { data } = await axios.get(`/order?sort=${order}`)
+      resolve({ data })
+    } catch (error) {
+      reject({ data: null })
+    }
   });
 }

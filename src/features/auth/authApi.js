@@ -1,18 +1,14 @@
-// A mock function to mimic making an async request for data
+import axios from 'axios';
 import { toast } from 'react-toastify';
 
 export function loginUser(user) {
   return new Promise(async (resolve, reject) => {
-    const response = await fetch("https://mern-ecommerce-backend-plnp.onrender.com/user/login", {
-      method: 'POST',
-      headers: { 'content-type': 'application/json' },
-      credentials: "include",
-      body: JSON.stringify(user)
-    })
-    if (response.ok) {
-      const data = await response.json()
-      resolve({ data })
-    } else {
+    try {
+      const res = await axios.post("/user/login", user)
+      localStorage.setItem("jwt-routes", (res.headers?.["x-jwt-routes"]));
+      resolve({ data: res.data })
+    } catch (error) {
+      console.log(error);
       console.log("CANT LOGIN INVALID CREDENTIALS");
       toast("INVALID CREDENTIALS")
       reject({ data: null })
@@ -20,34 +16,52 @@ export function loginUser(user) {
   });
 }
 
+export function checkUserSession() {
+  return new Promise(async (resolve, reject) => {
+
+    if (localStorage.getItem("jwt-routes")) {
+
+      try {
+        const { data } = await axios.get("/auth/checkUserSession")
+        console.log(data);
+        resolve({ data })
+      } catch (error) {
+        reject({ data: null })
+      }
+
+    } else {
+      reject({ data: null })
+    }
+
+  });
+}
+
 
 export function createUser(newUser) {
   return new Promise(async (resolve) => {
-    const response = await fetch("https://mern-ecommerce-backend-plnp.onrender.com/user/signup", {
-      method: 'POST',
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify(newUser)
-    })
-    const data = await response.json()
-    resolve({ data })
+    try {
+      const { data } = await axios.post("/user/signup", newUser)
+      console.log(data);
+      resolve({ data })
+    } catch (error) {
+      console.log("CANT CREATE NEW USER");
+      toast("UNABLE TO CREATE NEW USER")
+      reject({ data: null })
+    }
   });
 }
 
 
 export function updateUserAddresses(user) {
-  return new Promise(async (resolve) => {
-    const response = await fetch(`https://mern-ecommerce-backend-plnp.onrender.com/user/${user.id}`, {
-      method: 'PATCH',
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ addresses: user.addresses })
-    })
-    if (response.ok) {
-      const data = await response.json()
-      toast("ADDRESS ADDED")
+  return new Promise(async (resolve, reject) => {
+    try {
+      const { data } = await axios.patch(`/user/${user.id}`, { addresses: user.addresses })
+      console.log(data);
+      toast(user.message + "ED ADDRESS")
       resolve({ data })
-    } else {
+    } catch (error) {
       console.log("ADDRESS NOT ADDED");
-      toast("RESET LINK DOESN'T SENT")
+      toast("ADRESS NOT ADDED")
       reject({ data: null })
     }
   });
@@ -55,18 +69,14 @@ export function updateUserAddresses(user) {
 
 export function resetPasswordRequest(userEmail) {
   return new Promise(async (resolve, reject) => {
-    const response = await fetch("https://mern-ecommerce-backend-plnp.onrender.com/user/resetPasswordRequest", {
-      method: 'POST',
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify(userEmail)
-    })
-    if (response.ok) {
-      const data = await response.json()
-      toast("RESET LINK SENT TO YOUR EMAIL")
+    try {
+      const { data } = await axios.post("/user/resetPasswordRequest", userEmail)
+      console.log(data);
+      toast("RESET LINK SENT TO EMAIL")
       resolve({ data })
-    } else {
-      console.log("CANT RESET PASSWORD REQUEST");
-      toast("RESET LINK DOESN'T SENT")
+    } catch (error) {
+      console.log("CANT SENT RESET LINK");
+      toast("CANT SENT RESET LINK : CHECK YOUR EMAIL")
       reject({ data: null })
     }
   });
@@ -74,42 +84,14 @@ export function resetPasswordRequest(userEmail) {
 
 export function resetPassword(newPassword) {
   return new Promise(async (resolve, reject) => {
-    const response = await fetch("https://mern-ecommerce-backend-plnp.onrender.com/user/resetPassword", {
-      method: 'POST',
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify(newPassword)
-    })
-    if (response.ok) {
-      const data = await response.json()
-      toast("PASSWORD RESET")
+    try {
+      const { data } = await axios.post("/user/resetPassWORD", newPassword)
+      console.log(data);
+      toast("PASSWORD CHANGED")
       resolve({ data })
-    } else {
-      console.log("CANT RESET PASSWORD REQUEST");
-      toast("ERROR OCCURED")
-      reject({ data: null })
-    }
-  });
-}
-
-export function checkUserByToken() {
-  return new Promise(async (resolve, reject) => {
-    const response = await fetch(`https://mern-ecommerce-backend-plnp.onrender.com/auth/checkUserLoggedIn`, { credentials: "include" })
-    if (response.ok) {
-      const data = await response.json()
-      resolve({ data })
-    } else {
-      reject({ data: null })
-    }
-  });
-}
-
-export function signoutUser() {
-  return new Promise(async (resolve, reject) => {
-    const response = await fetch(`https://mern-ecommerce-backend-plnp.onrender.com/auth/checkUserLoggedOut`, { credentials: "include" })
-    if (response.ok) {
-      const data = await response.json()
-      resolve({ data })
-    } else {
+    } catch (error) {
+      console.log("CAN'T CHANGE PASSWORD");
+      toast("PASSWORD DOESN'T CHANGE")
       reject({ data: null })
     }
   });

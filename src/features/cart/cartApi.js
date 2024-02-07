@@ -1,50 +1,57 @@
-// A mock function to mimic making an async request for data
+import axios from "axios";
+import { toast } from "react-toastify";
 
 export function AddCartItem(cartItem) {
-  return new Promise(async (resolve) => {
-    const response = await fetch("https://mern-ecommerce-backend-plnp.onrender.com/cart", {
-      method: 'POST',
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify(cartItem)
-    })
-    const data = await response.json()
-    resolve({ data })
+  return new Promise(async (resolve, reject) => {
+
+    try {
+      const { data } = await axios.post("/cart", cartItem)
+      console.log(data);
+      resolve({ data })
+    } catch (error) {
+      console.log("CART NOT ADDED");
+      toast("CART NOT ADDED")
+      reject({ data: null })
+    }
+
+
   });
 }
 
-
 export function fetchCartItems(userId) {
-  return new Promise(async (resolve) => {
-    const response = await fetch(`https://mern-ecommerce-backend-plnp.onrender.com/cart/${userId}`)
-    const data = await response.json()
-    resolve({ data })
+  return new Promise(async (resolve, reject) => {
+    try {
+      const { data } = await axios.get(`/cart/${userId}`)
+      resolve({ data })
+    } catch (error) {
+      reject({ data: null })
+    }
   });
 }
 
 export function deleteCartItem(cartId) {
-  return new Promise(async (resolve) => {
+  return new Promise(async (resolve, reject) => {
     console.log("deleting cart");
-    console.log(cartId);
-    const response = await fetch(`https://mern-ecommerce-backend-plnp.onrender.com/cart/${cartId}`, {
-      method: 'DELETE',
-      headers: { 'content-type': 'application/json' }
-    })
-    const data = await response.json()
-    console.log(data);
-    resolve({ data })
+    try {
+      const { data } = await axios.delete(`/cart/${cartId}`)
+      resolve({ data })
+    } catch (error) {
+      toast("CART NOT DELETED")
+      reject({ data: null })
+    }
+
   });
 }
 
 
 export function updateCartItem(cart) {
-  return new Promise(async (resolve) => {
-    console.log(cart);
-    const response = await fetch(`https://mern-ecommerce-backend-plnp.onrender.com/cart/${cart.id}`, {
-      method: 'PATCH',
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ quantity: cart.quantity })
-    })
-    const data = await response.json()
-    resolve({ data })
+  return new Promise(async (resolve, reject) => {
+    console.log("UPDATING CART ");
+    try {
+      const { data } = await axios.patch(`/cart/${cart.id}`, { quantity: cart.quantity })
+      resolve({ data })
+    } catch (error) {
+      reject({ data: null })
+    }
   });
 }

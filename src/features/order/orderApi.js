@@ -1,72 +1,81 @@
+import axios from "axios";
 import { toast } from "react-toastify";
 
 export function AddOrder(order) {
-  return new Promise(async (resolve) => {
+  return new Promise(async (resolve, reject) => {
     console.log(order);
-    const response = await fetch("https://mern-ecommerce-backend-plnp.onrender.com/order", {
-      method: 'POST',
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify(order)
-    })
-    const data = await response.json()
-    toast("Order Placed")
-    resolve({ data })
+    try {
+      const { data } = await axios.post("/order", order)
+      console.log(data);
+      toast("ORDER PALCED")
+      resolve({ data })
+    } catch (error) {
+      console.log("ORDER NOT PLACED");
+      toast("ORDER NOT PLACED")
+      reject({ data: null })
+    }
+
   });
 }
 
 
 export function fetchOrder(userId) {
-  return new Promise(async (resolve) => {
-    const response = await fetch(`https://mern-ecommerce-backend-plnp.onrender.com/order/${userId}`)
-    const data = await response.json()
-    resolve({ data })
-  });
-}
-
-export function deleteOrder(orderId) {
-  return new Promise(async (resolve) => {
-    console.log("deleting cart");
-    console.log(orderId);
-    const response = await fetch(`https://mern-ecommerce-backend-plnp.onrender.com/order/${orderId}`, {
-      method: 'DELETE',
-      headers: { 'content-type': 'application/json' }
-    })
-    if (response.ok) {
-      const data = await response.json()
-      toast(`ORDER DELETED ID : ${orderId}`)
+  return new Promise(async (resolve, reject) => {
+    try {
+      const { data } = await axios.get(`/order/${userId}`)
       resolve({ data })
-    } else {
-      console.log("CANT LOGIN INVALID CREDENTIALS");
-      toast("ORDER NOT DELETED")
+    } catch (error) {
       reject({ data: null })
     }
   });
 }
 
+export function deleteOrder(orderId) {
+  return new Promise(async (resolve, reject) => {
+
+    try {
+      const { data } = await axios.delete(`/order/${orderId}`)
+      console.log(data);
+      toast(`ORDER DELETED ${orderId}`)
+      resolve({ data })
+    } catch (error) {
+      console.log("ORDER NOT DELETED");
+      toast("ORDER NOT DELETED")
+      reject({ data: null })
+    }
+
+  });
+}
+
 // DELETING ALL CART ITEM OF USER
 export function deleteAllUserCartItem(userId) {
-  return new Promise(async (resolve) => {
-    const response = await fetch(`https://mern-ecommerce-backend-plnp.onrender.com/cart/user/${userId}`, {
-      method: 'DELETE',
-      headers: { 'content-type': 'application/json' }
-    })
-    const data = await response.json()
-    resolve({ data })
+  return new Promise(async (resolve, reject) => {
+
+    try {
+      const { data } = await axios.delete(`/cart/user/${userId}`)
+      resolve({ data })
+    } catch (error) {
+      console.log("CART NOT DELETED AFTER ORDER PLACED");
+      reject({ data: null })
+    }
+
   });
 }
 
 // SENDING MAIL FOR ORDER PLACED
 export function mailOrderReceipt(order) {
-  return new Promise(async (resolve) => {
+  return new Promise(async (resolve, reject) => {
     console.log(order);
-    const response = await fetch("https://mern-ecommerce-backend-plnp.onrender.com/order/mailOrder", {
-      method: 'POST',
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify(order)
-    })
-    const data = await response.json()
-    toast("Order Placed")
-    console.log(data);
-    resolve({ data })
+    try {
+      const { data } = await axios.post(`/order/mailOrder`, order)
+      console.log(data);
+      toast(`EMAIL SEND FOR ORDER`)
+      resolve({ data })
+    } catch (error) {
+      console.log("MAIL NOT SEND FOR ORDER");
+      toast("MAIL NOT SEND FOR ORDER")
+      reject({ data: null })
+    }
+
   });
 }
