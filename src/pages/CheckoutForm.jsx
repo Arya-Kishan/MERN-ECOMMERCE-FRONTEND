@@ -55,7 +55,7 @@ export default function CheckoutForm() {
     const { error } = await stripe.confirmPayment({
       elements,
       confirmParams: {
-        return_url: "http://localhost:5173/orderSuccess",
+        return_url: "https://heroic-twilight-9e84af.netlify.app/orderSuccess",
       },
     });
 

@@ -8,7 +8,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from "axios"
 
-axios.defaults.baseURL = ("https://my-mern-ecommerce.vercel.app/")
+axios.defaults.baseURL = ("https://my-mern-ecommerce.vercel.app")
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>

@@ -5,7 +5,7 @@ import LoginPage from './pages/LoginPage';
 import ProtectedPage from './pages/ProtectedPage';
 import ProtectedAdminPage from './pages/ProtectedAdminPage';
 import { fetchCartItemsAsync } from './features/cart/cartSlice';
-import { selectLoggedInUser } from './features/auth/authSlice';
+import { checkUserSessionAsync, selectCheckRoutes, selectLoggedInUser } from './features/auth/authSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import Loader from './pages/Loader';
 import AdminUsers from './Admin/AdminProductList/components/AdminUsers';
@@ -34,18 +34,22 @@ export default function App() {
 
   axios.defaults.headers.common["jwt-routes"] = `${localStorage.getItem("jwt-routes")}`
   const user = useSelector(selectLoggedInUser)
+  const routes = useSelector(selectCheckRoutes)
   const dispatch = useDispatch()
+
 
   useEffect(() => {
     if (user) {
       dispatch(fetchCartItemsAsync(user._id));
+    } else {
+      dispatch(checkUserSessionAsync())
     }
   }, [user])
 
 
   return (
     <div>
-      <BrowserRouter>
+      {routes ? <BrowserRouter>
         <Suspense fallback={<Loader />} >
           <Routes>
             <Route path='/practice' element={<Practice />} />
@@ -72,7 +76,7 @@ export default function App() {
             <Route path='*' element={<PageNotFound />} />
           </Routes>
         </Suspense>
-      </BrowserRouter>
+      </BrowserRouter> : "ROUTES"}
     </div>
   )
 }

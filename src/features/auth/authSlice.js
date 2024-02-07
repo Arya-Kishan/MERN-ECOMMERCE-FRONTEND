@@ -5,6 +5,7 @@ const initialState = {
   loggedInUser: null,
   userAddresses: [],
   resetStatus: null,
+  routes: false,
   status: 'idle',
 };
 
@@ -22,9 +23,13 @@ export const createUserAsync = createAsyncThunk(
 
 export const checkUserSessionAsync = createAsyncThunk(
   'auth/checkUserSession',
-  async () => {
-    const response = await checkUserSession();
-    return response.data;
+  async (user, { rejectWithValue }) => {
+    try {
+      const response = await checkUserSession();
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error)
+    }
   }
 );
 
@@ -92,7 +97,13 @@ export const authSlice = createSlice({
       })
       .addCase(checkUserSessionAsync.fulfilled, (state, action) => {
         state.status = 'idle';
-        state.loggedInUser = null;//todo
+        state.loggedInUser = action.payload;
+        state.routes = true;
+      })
+      .addCase(checkUserSessionAsync.rejected, (state, action) => {
+        state.status = 'idle';
+        state.loggedInUser = null;
+        state.routes = true;
       })
       .addCase(loginUserAsync.pending, (state) => {
         state.status = 'loading';
@@ -100,6 +111,7 @@ export const authSlice = createSlice({
       .addCase(loginUserAsync.fulfilled, (state, action) => {
         state.status = 'idle';
         state.loggedInUser = action.payload;
+        state.routes = true;
       })
       .addCase(createUserAsync.pending, (state) => {
         state.status = 'loading';
@@ -136,6 +148,7 @@ export const { logoutUser } = authSlice.actions;
 
 export const selectLoggedInUser = (state) => state.auth.loggedInUser;
 export const selectResetStatus = (state) => state.auth.resetStatus;
+export const selectCheckRoutes = (state) => state.auth.routes;
 // export const selectuserAddresses = (state) => state.auth.userAddresses;
 
 export default authSlice.reducer;
