@@ -20,13 +20,8 @@ export default function StripeCheckout() {
 
   useEffect(() => {
     // Create PaymentIntent as soon as the page loads
-    fetch("http://localhost:8080/create-payment-intent", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ items: currentOrder }),
-    })
-      .then((res) => res.json())
-      .then((data) => setClientSecret(data.clientSecret));
+    axios.post("/create-payment-intent", { items: currentOrder })
+      .then((res) => setClientSecret(res.data.clientSecret));
   }, []);
 
   const appearance = {
