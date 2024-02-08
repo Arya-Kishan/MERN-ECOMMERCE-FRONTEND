@@ -21,8 +21,11 @@ export default function Wishlist() {
 
   return (
     <div className='mt-4'>
+
       <h1 className='text-4xl text-center'>WISHLIST</h1>
+
       {wishlistStatus == "idle" ? <div className='flex gap-8 items-center justify-center flex-wrap p-4'>
+
         {wishlist?.length > 0 ? wishlist.map((e) => <ProductCard1 product={e.itemId} component={"wishlist"} wishlistItemId={e._id} key={e._id} />)
           :
           <div className='flex flex-col justify-center items-center gap-5 w-full h-[80vh]'>
@@ -30,7 +33,9 @@ export default function Wishlist() {
             <button onClick={e => navigate('/')} className='bg-blue-600 rounded-lg p-4'>Home</button>
           </div>
         }
+        
       </div> : <Loader />}
+
     </div>
   )
 }

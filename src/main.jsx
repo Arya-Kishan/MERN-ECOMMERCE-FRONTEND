@@ -9,6 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import axios from "axios"
 
 axios.defaults.baseURL = ("https://my-mern-ecommerce.vercel.app")
+// axios.defaults.baseURL = ("http://localhost:8080")
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>

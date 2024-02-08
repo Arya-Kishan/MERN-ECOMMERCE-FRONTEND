@@ -38,11 +38,12 @@ export function checkUserSession() {
 
 
 export function createUser(newUser) {
-  return new Promise(async (resolve) => {
+  return new Promise(async (resolve, reject) => {
     try {
-      const { data } = await axios.post("/user/signup", newUser)
-      console.log(data);
-      resolve({ data })
+      const res = await axios.post("/user/signup", newUser)
+      localStorage.setItem("jwt-routes", (res.headers?.["x-jwt-routes"]));
+      console.log(res.data);
+      resolve({ data: res.data })
     } catch (error) {
       console.log("CANT CREATE NEW USER");
       toast("UNABLE TO CREATE NEW USER")

@@ -74,7 +74,7 @@ export const wishlistSlice = createSlice({
                 state.wishlistCount = action.payload.length;
             })
             .addCase(deleteWishlistAsync.pending, (state) => {
-                state.status = 'loading';
+                state.status = 'idle';
             })
             .addCase(deleteWishlistAsync.fulfilled, (state, action) => {
                 state.status = 'idle';

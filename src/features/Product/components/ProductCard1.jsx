@@ -44,7 +44,7 @@ export default function ProductCard1({ product, component, wishlistItemId }) {
           </button>
 
           <button onClick={() => handleWishlistDelete(wishlistItemId)}>
-            {component == "wishlist" && <CloseIcon />}
+            {component == "wishlist" && <CloseIcon style={{color:"red"}}/>}
           </button>
 
           <button className="cursor-pointer" onClick={(e) => {
