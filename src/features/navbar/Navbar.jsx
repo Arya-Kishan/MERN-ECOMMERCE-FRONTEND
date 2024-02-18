@@ -216,7 +216,7 @@ export default function Navbar({ children }) {
                 <div className="mx-auto w-full py-6 sm:px-2 lg:px-2 pt-[64px]">{children}</div>
             </main>
 
-            <img ref={searchRef} onClick={e => navigate("/search")} className='fixed top-[94vh] right-6 w-8 bg-white p-1 rounded-lg shadow-lg cursor-pointer hover:bg-teal-500' src={search} alt="" srcSet="" />
+            <img ref={searchRef} onClick={e => navigate("/search")} className='fixed bottom-[5vh] right-4 w-8 bg-white p-1 rounded-lg cursor-pointer hover:bg-teal-500' src={search} style={{boxShadow:"0 0 5px 3px black"}} alt="" srcSet="" />
 
         </div >
     )

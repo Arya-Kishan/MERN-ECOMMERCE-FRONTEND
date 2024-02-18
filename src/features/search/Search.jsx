@@ -82,7 +82,7 @@ export default function Search() {
 
         </div>
         :
-        <div className='w-full h-[calc(100vh-70px)] flex items-center justify-center text-2xl'>No Result {transcript}</div>}
+        <div className='w-full h-[calc(100vh-70px)] flex items-center justify-center text-2xl text-gray-500'>Search Product...</div>}
 
 
 
