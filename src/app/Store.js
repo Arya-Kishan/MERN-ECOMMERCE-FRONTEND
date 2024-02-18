@@ -6,6 +6,7 @@ import orderReducer from '../features/order/orderSlice'
 import adminReducer from '../Admin/AdminProductList/adminSlice'
 import wishListReducer from '../features/wishlist/wishlistSlice'
 import compareReducer from '../features/compare/compareSlice'
+import searchReducer from '../features/search/searchSlice'
 
 export const store = configureStore({
   reducer: {
@@ -16,5 +17,6 @@ export const store = configureStore({
     admin: adminReducer,
     wishlist: wishListReducer,
     compare: compareReducer,
+    search: searchReducer,
   },
 })

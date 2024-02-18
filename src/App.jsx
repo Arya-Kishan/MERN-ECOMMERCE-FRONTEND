@@ -10,8 +10,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import Loader from './pages/Loader';
 import AdminUsers from './Admin/AdminProductList/components/AdminUsers';
 import InfiniteScrollPage from './pages/InfiniteScrollPage';
-import Practice from './pages/Practice';
 import axios from 'axios';
+import Search from './features/search/Search';
 const WishlistPage = lazy(() => (import('./pages/WishlistPage')))
 const ComparePage = lazy(() => (import('./pages/ComparePage')))
 const ProductDetailPage = lazy(() => (import('./pages/ProductDetailPage')))
@@ -52,7 +52,6 @@ export default function App() {
       {routes ? <BrowserRouter>
         <Suspense fallback={<Loader />} >
           <Routes>
-            <Route path='/practice' element={<Practice />} />
             <Route path='/' element={<ProtectedPage><HomePage></HomePage></ProtectedPage>} />
             <Route path='/signup' element={<SignupPage />} />
             <Route path='/login' element={<LoginPage />} />
@@ -63,6 +62,7 @@ export default function App() {
             <Route path='/userProfile/:userId' element={<ProtectedPage><UserProfilePage /></ProtectedPage>} />
             <Route path='/wishlist' element={<ProtectedPage><WishlistPage /></ProtectedPage>} />
             <Route path='/compare' element={<ProtectedPage><ComparePage /></ProtectedPage>} />
+            <Route path='/search' element={<ProtectedPage><Search /></ProtectedPage>} />
             <Route path='/infiniteScroll/:category' element={<ProtectedPage><InfiniteScrollPage /></ProtectedPage>} />
             <Route path='/forgotPassword' element={<ForgotPassword />} />
             <Route path='/resetPassword' element={<ResetPassword />} />

@@ -73,7 +73,7 @@ export default function ProductListSecond({ show }) {
         if (totalProductsCount) {
             setPaginationCount(Math.ceil(totalProductsCount?.productsCount / 8))
         }
-    }, [products])
+    }, [products,totalProductsCount])
 
     useEffect(() => {
         dispatch(fetchAllProductsAsync({ page }));

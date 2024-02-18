@@ -23,7 +23,7 @@ export function checkUserSession() {
 
       try {
         const { data } = await axios.get("/auth/checkUserSession")
-        console.log(data);
+        // console.log(data);
         resolve({ data })
       } catch (error) {
         reject({ data: null })

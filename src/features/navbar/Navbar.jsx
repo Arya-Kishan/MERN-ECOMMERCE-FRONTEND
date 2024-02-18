@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -12,6 +12,7 @@ import { logoutUser, selectLoggedInUser } from '../auth/authSlice'
 import { selectcartCount } from '../cart/cartSlice'
 import logo from '../../assets/logo1.png'
 import circle1 from '../../assets/circle1.png'
+import search from '../../assets/search.png'
 import { selectWishlistCount } from '../wishlist/wishlistSlice';
 import { selectCompareCount } from '../compare/compareSlice';
 
@@ -28,6 +29,8 @@ export default function Navbar({ children }) {
     const wishlistCount = useSelector(selectWishlistCount)
     const compareCount = useSelector(selectCompareCount)
     const dispatch = useDispatch()
+    const [previousScrollY, setPreviousScrollY] = React.useState(0);
+    const searchRef = useRef()
 
     const handleNavigate = (e) => {
         navigate(`/cart/${user._id}`);
@@ -36,6 +39,27 @@ export default function Navbar({ children }) {
     const handleNavigateWishlist = (e) => {
         navigate(`/wishlist`);
     }
+
+    const handleWindowScrollSearchBtn = (e) => {
+        const currentScrollY = window.scrollY;
+
+        if (currentScrollY > previousScrollY) {
+            console.log("User is scrolling down");
+            searchRef.current.classList.add("search1");
+            searchRef.current.classList.remove("search2");
+        } else {
+            console.log("User is scrolling up");
+            searchRef.current.classList.add("search2");
+            searchRef.current.classList.remove("search1");
+        }
+
+        setPreviousScrollY(currentScrollY);
+    }
+
+    useEffect(() => {
+        window.addEventListener('scroll', handleWindowScrollSearchBtn)
+        return () => window.removeEventListener("scroll", handleWindowScrollSearchBtn)
+    }, [previousScrollY])
 
     return (
         <div>
@@ -63,7 +87,7 @@ export default function Navbar({ children }) {
                                             src={logo}
                                             alt="Your Company"
                                         />
-                                        <span className='text-2xl text-white cursor-pointer' onClick={e=>navigate("/")}>Aryazon</span>
+                                        <span className='text-2xl text-white cursor-pointer' onClick={e => navigate("/")}>Aryazon</span>
                                     </div>
                                     <div className="hidden sm:ml-6 sm:block">
                                         {user.role == "admin" && <div className="flex space-x-4">
@@ -191,6 +215,8 @@ export default function Navbar({ children }) {
             <main>
                 <div className="mx-auto w-full py-6 sm:px-2 lg:px-2 pt-[64px]">{children}</div>
             </main>
+
+            <img ref={searchRef} onClick={e => navigate("/search")} className='fixed top-[94vh] right-6 w-8 bg-white p-1 rounded-lg shadow-lg cursor-pointer hover:bg-teal-500' src={search} alt="" srcSet="" />
 
         </div >
     )
