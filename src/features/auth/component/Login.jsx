@@ -2,10 +2,11 @@ import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Link, Navigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { loginUserAsync, selectLoggedInUser } from '../authSlice';
+import { loginGuestUserAsync, loginUserAsync, selectLoggedInUser } from '../authSlice';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import logo from '../../../assets/logo1.png'
+import GuestIcon from '@mui/icons-material/AccountCircle';
 
 export default function Login() {
 
@@ -23,6 +24,11 @@ export default function Login() {
   const handleLogin = (data, e) => {
     e.preventDefault();
     dispatch(loginUserAsync(data))
+  }
+  
+  const handleGuest = () =>{
+    console.log("arya hii");
+    dispatch(loginGuestUserAsync())
   }
 
   return (
@@ -101,6 +107,9 @@ export default function Login() {
             </Link>
           </p>
         </div>
+      </div>
+      <div onClick={handleGuest} className='cursor-pointer fixed bottom-10 right-10 hover:bg-blue-600 px-5 py-2 rounded-lg'>
+        <p className='flex items-center justify-center gap-2'><GuestIcon/>Guest</p>
       </div>
     </div>
   )

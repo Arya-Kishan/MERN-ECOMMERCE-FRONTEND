@@ -52,6 +52,12 @@ export default function Search() {
     }
   }, [listening]);
 
+  useEffect(() => {
+    if (finalTranscript !== '') {
+      console.log('Got final result:', finalTranscript);
+    }
+  }, [finalTranscript]);
+
   return (
     <div className='w-full min-h-[100vh]'>
 

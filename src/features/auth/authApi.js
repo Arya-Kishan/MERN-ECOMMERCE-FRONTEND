@@ -16,6 +16,22 @@ export function loginUser(user) {
   });
 }
 
+export function loginGuestUser() {
+  return new Promise(async (resolve, reject) => {
+    try {
+      console.log("fetching for guest");
+      const res = await axios.get("/guest")
+      localStorage.setItem("jwt-routes", (res.headers?.["x-jwt-routes"]));
+      resolve({ data: res.data })
+    } catch (error) {
+      console.log(error);
+      console.log("CANT LOGIN INVALID CREDENTIALS");
+      toast("INVALID CREDENTIALS")
+      reject({ data: null })
+    }
+  });
+}
+
 export function checkUserSession() {
   return new Promise(async (resolve, reject) => {
 
