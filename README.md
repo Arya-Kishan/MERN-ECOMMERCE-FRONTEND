@@ -1,6 +1,6 @@
 # ARYA ZON 🗨️
 
-Welcome to the Aryazon project, a web application designed to provide a seamless experience similar to ecommerce application. Below are the key features and functionalities of the Aryazon App.
+Welcome to the Aryazon project, a web application designed to provide a seamless experience similar to ecommerce application.
 
 # Experience it Yourself 🔗
 
@@ -8,7 +8,7 @@ Welcome to the Aryazon project, a web application designed to provide a seamless
 
 # About Aryazon 🕵️
 
-Aryazon is a ecommerce web application where a user can search product, add to cart, make orders and many more functionalities awaits [live](https://heroic-twilight-9e84af.netlify.app/). This project uses the MERN stack, which stands for MongoDB, Express.js, React.js, and Node.js.
+Aryazon is a ecommerce web application where a user can search product, add to cart, make orders and many more functionalities awaits [live](https://heroic-twilight-9e84af.netlify.app/). This project uses the MERN stack, which stands for MongoDB, Express.js, React.js, and Node.js. Below are the key features and functionalities of the Aryazon App.
 
 # Features 🤖
 
