@@ -9,13 +9,13 @@ export default function Cards() {
         <div>
 
             <div className='flex gap-5 w-full overflow-scroll p-10'>
-                <img onClick={() => navigate('/infiniteScroll/mens-watches')} className='w-40 md:w-80 p-10 border-solid border-2 border-black-400' src='https://cdn.dummyjson.com/product-images/68/thumbnail.webp'></img>
-                <img onClick={() => navigate('/infiniteScroll/womens-dresses')} className='w-40 md:w-80 p-10 border-solid border-2 border-black-400' src='https://cdn.dummyjson.com/product-images/41/1.jpg'></img>
-                <img onClick={() => navigate('/infiniteScroll/mens-shirts')} className='w-40 md:w-80 p-10 border-solid border-2 border-black-400' src='https://cdn.dummyjson.com/product-images/55/thumbnail.jpg'></img>
-                <img onClick={() => navigate('/infiniteScroll/mens-shoes')} className='w-40 md:w-80 p-10 border-solid border-2 border-black-400' src='https://cdn.dummyjson.com/product-images/60/thumbnail.jpg     '></img>
-                <img onClick={() => navigate('/infiniteScroll/womens-dresses')} className='w-40 md:w-80 p-10 border-solid border-2 border-black-400' src='https://cdn.dummyjson.com/product-images/39/1.jpg'></img>
-                <img onClick={() => navigate('/infiniteScroll/mens-shirts')} className='w-40 md:w-80 p-10 border-solid border-2 border-black-400' src='https://cdn.dummyjson.com/product-images/52/3.jpg'></img>
-                <img onClick={() => navigate('/infiniteScroll/mens-watches')} className='w-40 md:w-80 p-10 border-solid border-2 border-black-400' src='https://cdn.dummyjson.com/product-images/63/thumbnail.webp'></img>
+                <img onClick={() => navigate('/infiniteScroll/mens-watches')} className='w-40 md:w-80 p-10 border-solid border-2 border-black-400' src='https://cdn.dummyjson.com/products/images/mens-watches/Brown%20Leather%20Belt%20Watch/thumbnail.png'></img>
+                <img onClick={() => navigate('/infiniteScroll/womens-dresses')} className='w-40 md:w-80 p-10 border-solid border-2 border-black-400' src='https://cdn.dummyjson.com/products/images/tops/Girl%20Summer%20Dress/thumbnail.png'></img>
+                <img onClick={() => navigate('/infiniteScroll/mens-shirts')} className='w-40 md:w-80 p-10 border-solid border-2 border-black-400' src='https://cdn.dummyjson.com/products/images/mens-shirts/Men%20Check%20Shirt/thumbnail.png'></img>
+                <img onClick={() => navigate('/infiniteScroll/mens-shoes')} className='w-40 md:w-80 p-10 border-solid border-2 border-black-400' src='https://cdn.dummyjson.com/products/images/mens-shoes/Nike%20Air%20Jordan%201%20Red%20And%20Black/thumbnail.png'></img>
+                <img onClick={() => navigate('/infiniteScroll/womens-dresses')} className='w-40 md:w-80 p-10 border-solid border-2 border-black-400' src="https://cdn.dummyjson.com/products/images/womens-dresses/Black%20Women's%20Gown/thumbnail.png"></img>
+                <img onClick={() => navigate('/infiniteScroll/mens-shirts')} className='w-40 md:w-80 p-10 border-solid border-2 border-black-400' src='https://cdn.dummyjson.com/products/images/mens-shirts/Man%20Short%20Sleeve%20Shirt/thumbnail.png'></img>
+                <img onClick={() => navigate('/infiniteScroll/mens-watches')} className='w-40 md:w-80 p-10 border-solid border-2 border-black-400' src='https://cdn.dummyjson.com/products/images/mobile-accessories/Apple%20Watch%20Series%204%20Gold/thumbnail.png'></img>
             </div>
 
             <div className='flex justify-end'>
